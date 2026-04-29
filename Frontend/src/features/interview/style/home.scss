@@ -1,0 +1,701 @@
+// ── Sass modules ─────────────────────────────────────────────────────────────
+@use 'sass:color';
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DESIGN TOKENS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+// ── Page background (dark gradient, deep navy → near-black)
+$bg-page-from:    #0f172a;
+$bg-page-to:      #020617;
+
+// ── Glassmorphism card
+$glass-bg:        rgba(15, 23, 44, 0.72);   // semi-transparent navy
+$glass-border:    rgba(255, 255, 255, 0.07); // barely-visible white rim
+$glass-shadow:    rgba(0, 0, 0, 0.55);
+
+// ── Inputs / panels inside the card
+$bg-input:        rgba(255, 255, 255, 0.04);
+$bg-footer:       rgba(0, 0, 0, 0.35);
+
+// ── Borders
+$border-subtle:   rgba(255, 255, 255, 0.08);
+$border-focus:    #4b8cf5;
+
+// ── Text
+$text-primary:    #f1f5f9;
+$text-secondary:  #94a3b8;
+$text-muted:      #475569;
+$text-page-body:  #cbd5e1; // paragraph text on page (lighter than dark bg)
+
+// ── Accents
+$blue:            #4b8cf5;
+$blue-light:      #bfdbfe;
+$green:           #34d399;
+$purple:          #818cf8;
+
+// ── Glow orbs
+$glow-blue:       rgba(59, 130, 246, 0.18);
+$glow-purple:     rgba(129, 140, 248, 0.12);
+
+// ── Button
+$btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// PAGE SHELL
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.home {
+  // ── Fixed to viewport — zero page-level scroll
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+
+  // ── Dark gradient background (deep navy → near-black)
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, $glow-blue, transparent),
+    radial-gradient(ellipse 60% 50% at 80% 110%, $glow-purple, transparent),
+    linear-gradient(160deg, $bg-page-from 0%, $bg-page-to 100%);
+
+  font-family: $font-family;
+  color: $text-primary;
+
+  // ── Flex column: header (fixed) + card (grows)
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem 0;
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // HEADER
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  .home-header {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 1100px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+
+      // White → blue gradient on the plain text portion
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
+      // The "Interview Plan" highlight overrides with a blue-purple gradient
+      .highlight-text {
+        background: linear-gradient(90deg, #60a5fa, $purple);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+
+    p {
+      font-size: 0.97rem;
+      color: $text-page-body;
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.65;
+
+      strong {
+        color: $text-primary;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // GLASSMORPHISM CARD
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  .interview-card {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 1100px;
+
+    // Glassmorphism: blurred, semi-transparent dark surface
+    background: $glass-bg;
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+
+    border-radius: 1.5rem 1.5rem 0 0;         // flat bottom — card meets viewport edge
+    border: 1px solid $glass-border;
+    border-bottom: none;
+
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.03),        // inner rim
+      0 -8px 48px rgba(59, 130, 246, 0.10),    // blue top glow
+      0 24px 64px $glass-shadow;               // depth shadow
+
+    display: flex;
+    flex-direction: column;
+
+    // ── Card Body ──────────────────────────────────────────────────────────
+
+    .card-content {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+
+      // Custom scrollbar to match dark theme
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.12);
+        border-radius: 2px;
+      }
+
+      @media (min-width: 860px) {
+        flex-direction: row;
+      }
+    }
+
+    // ── Panels ────────────────────────────────────────────────────────────
+
+    .left-panel,
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    // Vertical rule between panels (desktop)
+    .panel-divider {
+      display: none;
+
+      @media (min-width: 860px) {
+        display: block;
+        width: 1px;
+        background: $border-subtle;
+        margin: 1.5rem 0;
+        flex-shrink: 0;
+      }
+    }
+
+    // ── Panel Header ──────────────────────────────────────────────────────
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+
+        .panel-icon {
+          color: $text-secondary;
+          display: flex;
+          align-items: center;
+        }
+
+        h2 {
+          font-size: 0.97rem;
+          font-weight: 600;
+          color: $text-primary;
+          letter-spacing: 0.01em;
+        }
+      }
+    }
+
+    // ── Badges ────────────────────────────────────────────────────────────
+
+    .badge {
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.65rem;
+      border-radius: 1rem;
+      border: 1px solid transparent;
+
+      &.required {
+        color: $blue;
+        background: rgba($blue, 0.1);
+        border-color: rgba($blue, 0.25);
+      }
+
+      &.best-results {
+        color: $green;
+        background: rgba($green, 0.08);
+        border-color: rgba($green, 0.25);
+      }
+    }
+
+    // ── Left Panel — Job Description Textarea ─────────────────────────────
+
+    .textarea-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: $bg-input;
+      border: 1px solid $border-subtle;
+      border-radius: 0.85rem;
+      position: relative;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &:focus-within {
+        border-color: rgba($blue, 0.55);
+        box-shadow: 0 0 0 3px rgba($blue, 0.1);
+      }
+
+      textarea {
+        flex: 1;
+        min-height: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        resize: none;
+        color: $text-primary;
+        font-family: $font-family;
+        font-size: 0.9rem;
+        line-height: 1.65;
+        padding: 1rem 1.15rem 2.5rem;
+
+        &::placeholder {
+          color: $text-muted;
+          font-size: 0.87rem;
+        }
+      }
+
+      .char-count {
+        position: absolute;
+        bottom: 0.85rem;
+        right: 1rem;
+        font-size: 0.73rem;
+        color: $text-muted;
+        user-select: none;
+      }
+    }
+
+    // ── Right Panel — Profile Sections ────────────────────────────────────
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.7rem;
+
+        h3 {
+          font-size: 0.88rem;
+          font-weight: 500;
+          color: $text-primary;
+        }
+      }
+    }
+
+    // ── Upload Area ────────────────────────────────────────────────────────
+
+    .upload-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border: 2px dashed $border-subtle;
+      border-radius: 0.85rem;
+      background: $bg-input;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba($blue, 0.45);
+
+        .upload-icon-wrap {
+          background: rgba($blue, 0.2);
+          color: color.adjust($blue, $lightness: 12%);
+          transform: translateY(-2px);
+        }
+      }
+
+      .upload-icon-wrap {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: rgba($blue, 0.12);
+        color: $blue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.8rem;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      }
+
+      .upload-primary {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: 0.2rem;
+      }
+
+      .upload-secondary {
+        font-size: 0.78rem;
+        color: $text-muted;
+      }
+    }
+
+    // ── OR Divider ─────────────────────────────────────────────────────────
+
+    .or-divider {
+      display: flex;
+      align-items: center;
+      margin: 0.75rem 0;
+
+      &::before,
+      &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: $border-subtle;
+      }
+
+      span {
+        padding: 0 0.85rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: $text-muted;
+      }
+    }
+
+    // ── Self-Description Wrapper + Textarea ──────────────────────────────
+
+    .self-desc-wrapper {
+      position: relative;         // needed for the typing overlay to anchor to
+
+      .self-desc-textarea {
+        background: $bg-input;
+        border: 1px solid $border-subtle;
+        border-radius: 0.85rem;
+        color: $text-primary;
+        font-family: $font-family;
+        font-size: 0.87rem;
+        line-height: 1.65;
+        padding: 0.85rem 1rem;
+        min-height: 95px;
+        resize: none;
+        outline: none;
+        width: 100%;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &::placeholder {
+          color: transparent;       // hide native placeholder — overlay handles it
+        }
+
+        &:focus {
+          border-color: rgba($blue, 0.55);
+          box-shadow: 0 0 0 3px rgba($blue, 0.1);
+        }
+      }
+    }
+
+    // ── Typing Animation Overlay ──────────────────────────────────────────
+    //
+    // Both .textarea-wrapper and .self-desc-wrapper have position:relative,
+    // so .typing-overlay anchors correctly inside both.
+
+    .typing-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 1rem 1.15rem;        // mirrors the textarea's padding exactly
+      font-family: $font-family;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: $text-muted;           // same colour as the textarea::placeholder
+      pointer-events: none;         // click-through — clicks reach the real textarea
+      white-space: pre-wrap;        // preserve newlines in multi-line hints
+      word-break: break-word;
+      overflow: hidden;
+      border-radius: 0.85rem;       // clip to the wrapper's corners
+      z-index: 1;
+    }
+
+    // The left-panel textarea-wrapper also needs its textarea placeholder hidden
+    .textarea-wrapper textarea::placeholder {
+      color: transparent;
+    }
+
+    // ── Blinking cursor ────────────────────────────────────────────────────
+
+    .typing-cursor {
+      display: inline-block;
+      margin-left: 1px;
+      color: $blue;                 // blue accent cursor matches the theme
+      font-weight: 300;
+      line-height: 1;
+      opacity: 1;
+
+      // While typing: solid cursor (no blink) — feels like active typing
+      // After done:   blink modifier class is added by the React component
+      &--blink {
+        animation: cursor-blink 1.1s step-end infinite;
+      }
+    }
+
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    // ── Info Box ───────────────────────────────────────────────────────────
+
+    .info-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-top: 0.85rem;
+      padding: 0.7rem 0.9rem;
+      background: rgba($blue, 0.07);
+      border: 1px solid rgba($blue, 0.18);
+      border-radius: 0.6rem;
+
+      .info-icon {
+        color: $blue;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      p {
+        font-size: 0.8rem;
+        color: $blue-light;
+        line-height: 1.55;
+
+        strong {
+          color: #fff;
+          font-weight: 600;
+        }
+      }
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // CARD FOOTER
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    .card-footer {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 1.75rem;
+      border-top: 1px solid $border-subtle;
+      background: $bg-footer;
+
+      .footer-left {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: $text-secondary;
+        font-size: 0.8rem;
+
+        svg {
+          flex-shrink: 0;
+        }
+
+        .footer-label {
+          color: $text-secondary;
+          font-weight: 500;
+        }
+
+        .footer-separator {
+          color: $text-muted;
+        }
+
+        .footer-time {
+          color: $text-muted;
+        }
+      }
+
+      // ── CTA Button ──────────────────────────────────────────────────────
+
+      .generate-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.68rem 1.4rem;
+        border: none;
+        border-radius: 2rem;
+        background: $btn-gradient;
+        color: #fff;
+        font-family: $font-family;
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        box-shadow:
+          0 2px 12px rgba(59, 130, 246, 0.35),
+          0 0 0 1px rgba(255,255,255,0.08) inset;
+
+        // Shimmer sweep on hover
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            105deg,
+            transparent 35%,
+            rgba(255, 255, 255, 0.18) 50%,
+            transparent 65%
+          );
+          transform: translateX(-100%);
+          transition: transform 0.45s ease;
+        }
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow:
+            0 6px 24px rgba(59, 130, 246, 0.5),
+            0 0 0 1px rgba(255,255,255,0.12) inset;
+          opacity: 0.96;
+
+          &::after {
+            transform: translateX(100%);
+          }
+        }
+
+        &:active {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+        svg {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // GENERATED PLANS SECTION
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  .generated-plans-section {
+    width: 100%;
+    max-width: 1100px;
+    margin: 4rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+
+    .empty-plans {
+      padding: 3rem;
+      border: 1px dashed $border-subtle;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      text-align: center;
+      
+      p {
+        color: $text-muted;
+        font-size: 0.95rem;
+      }
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .plan-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid $border-subtle;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.25rem;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateY(-2px);
+        border-color: rgba(75, 140, 245, 0.35); // subtle blue connection
+      }
+
+      .plan-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        h3 {
+          font-size: 1.1rem;
+          color: $text-primary;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .plan-desc {
+          margin: 0;
+          font-size: 0.85rem;
+          color: $text-page-body;
+          line-height: 1.5;
+        }
+
+        .plan-date {
+          display: inline-block;
+          margin-top: 0.5rem;
+          font-size: 0.75rem;
+          color: $text-muted;
+        }
+      }
+
+      .view-btn {
+        align-self: flex-start;
+        background: transparent;
+        color: $blue;
+        border: 1px solid $border-focus;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          background: rgba(75, 140, 245, 0.1);
+        }
+      }
+    }
+  }
+}

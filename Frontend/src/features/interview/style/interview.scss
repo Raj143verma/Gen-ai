@@ -1,0 +1,682 @@
+// ── Sass modules ─────────────────────────────────────────────────────────────
+@use 'sass:color';
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DESIGN TOKENS  (mirrors home.scss — keep in sync)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$font-family:   'Inter', system-ui, -apple-system, sans-serif;
+
+$bg-page-from:  #0f172a;
+$bg-page-to:    #020617;
+
+$glass-bg:      rgba(15, 23, 44, 0.72);
+$glass-border:  rgba(255, 255, 255, 0.07);
+$glass-shadow:  rgba(0, 0, 0, 0.55);
+
+$bg-input:      rgba(255, 255, 255, 0.04);
+$bg-item:       rgba(255, 255, 255, 0.035);
+
+$border-subtle: rgba(255, 255, 255, 0.08);
+$border-focus:  #4b8cf5;
+
+$text-primary:  #f1f5f9;
+$text-secondary:#94a3b8;
+$text-muted:    #475569;
+
+$blue:          #4b8cf5;
+$blue-light:    #bfdbfe;
+$green:         #34d399;
+$purple:        #818cf8;
+$amber:         #fbbf24;
+
+$glow-blue:     rgba(59, 130, 246, 0.18);
+$glow-purple:   rgba(129, 140, 248, 0.12);
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// PAGE SHELL
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.interview-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, $glow-blue, transparent),
+    radial-gradient(ellipse 60% 50% at 80% 110%, $glow-purple, transparent),
+    linear-gradient(160deg, $bg-page-from 0%, $bg-page-to 100%);
+
+  font-family: $font-family;
+  color: $text-primary;
+
+  display: flex;
+  align-items: stretch;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SHARED DIVIDER
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.iv-divider {
+  width: 1px;
+  background: $border-subtle;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// LEFT SIDEBAR
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.iv-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.25rem 1.5rem;
+  gap: 2rem;
+  overflow-y: auto;
+}
+
+.score-ring {
+  position: relative;
+  width: 80px;
+  height: 80px;
+
+  &__svg {
+    width: 80px;
+    height: 80px;
+    transform: rotate(-90deg);
+  }
+
+  &__track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 3;
+  }
+
+  &__fill {
+    fill: none;
+    stroke: url(#scoreGrad);
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease;
+    // Gradient via CSS filter as a fallback
+    stroke: $blue;
+    filter: drop-shadow(0 0 4px rgba($blue, 0.6));
+  }
+
+  &__value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: $text-primary;
+    letter-spacing: -0.04em;
+  }
+}
+
+// ── Navigation ───────────────────────────────────────────────────────────────
+
+.iv-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: none;
+    border-radius: 0.6rem;
+    background: transparent;
+    color: $text-secondary;
+    font-family: $font-family;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.18s ease, color 0.18s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: $text-primary;
+    }
+
+    &--active {
+      background: rgba($blue, 0.12);
+      color: $blue;
+      font-weight: 600;
+
+      .iv-nav__icon {
+        color: $blue;
+      }
+    }
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: $text-muted;
+    transition: color 0.18s ease;
+  }
+
+  &__label {
+    line-height: 1.35;
+  }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// CENTER CONTENT PANEL
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.iv-content {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 2rem 1.75rem;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar       { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 2px; }
+
+  &__inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+}
+
+// ── Section Header ────────────────────────────────────────────────────────────
+
+.content-section {
+  margin-bottom: 2.5rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid $border-subtle;
+  }
+
+  &__icon {
+    color: $blue;
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $text-primary;
+    letter-spacing: -0.01em;
+    flex: 1;
+  }
+}
+
+.section-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: $blue;
+  background: rgba($blue, 0.12);
+  border: 1px solid rgba($blue, 0.2);
+  border-radius: 2rem;
+  padding: 0.15rem 0.55rem;
+  letter-spacing: 0.02em;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// QUESTION CARDS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.question-card {
+  border: 1px solid $border-subtle;
+  border-radius: 0.75rem;
+  background: $bg-item;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover,
+  &--open {
+    border-color: rgba($blue, 0.3);
+    box-shadow: 0 0 0 1px rgba($blue, 0.06);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: none;
+    background: transparent;
+    color: $text-primary;
+    font-family: $font-family;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    line-height: 1.5;
+  }
+
+  &__num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: $blue;
+    background: rgba($blue, 0.1);
+    border-radius: 0.35rem;
+    padding: 0.2rem 0.45rem;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__q {
+    flex: 1;
+    color: $text-primary;
+    line-height: 1.5;
+  }
+
+  &__chevron {
+    display: flex;
+    align-items: center;
+    color: $text-muted;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+  }
+
+  &--open &__chevron {
+    color: $blue;
+  }
+
+  &__body {
+    border-top: 1px solid $border-subtle;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    animation: slide-down 0.2s ease;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $text-secondary;
+
+    svg { flex-shrink: 0; }
+  }
+
+  &__text {
+    font-size: 0.85rem;
+    color: $text-secondary;
+    line-height: 1.65;
+    margin: 0;
+    padding: 0.65rem 0.85rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.5rem;
+    border-left: 2px solid rgba($blue, 0.35);
+  }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DAY CARDS (Road Map)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.day-card {
+  border: 1px solid $border-subtle;
+  border-radius: 0.75rem;
+  background: $bg-item;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+
+  &:hover,
+  &--open {
+    border-color: rgba($purple, 0.3);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    background: transparent;
+    color: $text-primary;
+    font-family: $font-family;
+    font-size: 0.88rem;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  &__badge {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: $purple;
+    background: rgba($purple, 0.12);
+    border: 1px solid rgba($purple, 0.22);
+    border-radius: 0.35rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  &__focus {
+    flex: 1;
+    font-weight: 500;
+    color: $text-primary;
+    line-height: 1.45;
+  }
+
+  &__chevron {
+    display: flex;
+    align-items: center;
+    color: $text-muted;
+    flex-shrink: 0;
+  }
+
+  &--open &__chevron { color: $purple; }
+
+  &__tasks {
+    border-top: 1px solid $border-subtle;
+    list-style: none;
+    margin: 0;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: slide-down 0.2s ease;
+  }
+
+  &__task {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.84rem;
+    color: $text-secondary;
+    line-height: 1.5;
+  }
+
+  &__task-icon {
+    display: flex;
+    align-items: center;
+    margin-top: 1px;
+    color: $green;
+    flex-shrink: 0;
+  }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// RIGHT PANEL
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.iv-right-panel {
+  width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.25rem 1.5rem;
+  gap: 1.75rem;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar       { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+}
+
+// ── Right Panel Section ───────────────────────────────────────────────────────
+
+.rp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+
+  &--prep {
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    color: $amber;
+  }
+
+  &__title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $text-secondary;
+  }
+}
+
+// ── Skill Gap Tags ────────────────────────────────────────────────────────────
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.77rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  border-radius: 2rem;
+  border: 1px solid transparent;
+  cursor: default;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &--low {
+    color: $green;
+    background: rgba($green, 0.08);
+    border-color: rgba($green, 0.25);
+  }
+
+  &--medium {
+    color: $amber;
+    background: rgba($amber, 0.08);
+    border-color: rgba($amber, 0.28);
+  }
+
+  &--high {
+    color: #f87171;
+    background: rgba(#f87171, 0.08);
+    border-color: rgba(#f87171, 0.25);
+  }
+}
+
+// ── Prep Timeline ─────────────────────────────────────────────────────────────
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  // Connecting line
+  &::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: $border-subtle;
+  }
+}
+
+.timeline__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.timeline__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba($blue, 0.25);
+  border: 2px solid rgba($blue, 0.55);
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  .timeline__item:hover & {
+    background: $blue;
+    border-color: $blue;
+    box-shadow: 0 0 8px rgba($blue, 0.5);
+  }
+}
+
+.timeline__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.timeline__day {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: $blue;
+  text-transform: uppercase;
+}
+
+.timeline__focus {
+  font-size: 0.8rem;
+  color: $text-secondary;
+  line-height: 1.45;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// RESPONSIVE — collapse right panel on smaller screens
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+@media (max-width: 1100px) {
+  .iv-right-panel,
+  .iv-right-panel + .iv-divider,
+  .iv-divider:last-of-type {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .iv-sidebar {
+    width: 180px;
+    padding: 1.25rem 0.85rem;
+  }
+
+  .iv-content {
+    padding: 1.25rem 1rem;
+  }
+}
+
+
+// ── Right Panel — Match Score block ──────────────────────────────────────────
+
+.rp-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid $border-subtle;
+  margin-bottom: 0.25rem;
+
+  &__label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: $text-secondary;
+  }
+}
+
+// ── Prep Timeline (inside Roadmap center section) ─────────────────────────────
+
+.prep-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border-subtle;
+  border-radius: 0.75rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    color: $purple;
+  }
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: $text-secondary;
+  }
+
+  // Reuse existing .timeline, .timeline__item etc. — no overrides needed
+}
+

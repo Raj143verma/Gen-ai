@@ -1,0 +1,53 @@
+@use "./style/button.scss";
+
+// ── Universal Reset ──────────────────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// ── Root Typography ──────────────────────────────────────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+// ── Root Shell ───────────────────────────────────────────────────────────────
+// All pages inherit this base dark background.
+// This eliminates any white flash or edge-strip mismatch.
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+
+  // Deep space dark — matches the home page gradient start colour.
+  // Every other page that doesn't set its own bg inherits this.
+  background-color: #0a0d1a;
+  color: #f1f5f9;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// ── Global Utility ───────────────────────────────────────────────────────────
+.highlight {
+  color: #d20d3b;
+  font-size: 0.75rem;
+}
