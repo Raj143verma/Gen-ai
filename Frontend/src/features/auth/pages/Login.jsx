@@ -8,22 +8,27 @@ import {useNavigate,Link} from "react-router"
 const Login = () => {
    const navigate = useNavigate();
 
-  const { loading, handleLogin} = useAuth()
+  const { handleLogin } = useAuth()
 
   const [email,setEmail] = useState("")
   const [ password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e) => {
         e.preventDefault();
-         await handleLogin({email,password})
-         navigate("/home");
-         
+        setError("");
+        setIsSubmitting(true);
+        try {
+            await handleLogin({ email, password });
+            navigate("/home");
+        } catch (err) {
+            setError(err.response?.data?.message || err.message || "Invalid email or password");
+        } finally {
+            setIsSubmitting(false);
+        }
     }
     
-    if(loading){
-      return (<main><h1>Loading........</h1></main>)
-    }
-
 
 
    
@@ -31,6 +36,7 @@ const Login = () => {
     <main>
         <div className="form-container">
             <h1>Login</h1>
+            {error && <p className="error-message">{error}</p>}
 
             <form onSubmit={handleSubmit}>
 
@@ -48,7 +54,7 @@ const Login = () => {
                 onChange={(e) => { setPassword(e.target.value)}}
                 type="password" id="password" name="password" placeholder="Enter your password" />
               </div>
-                <button className='button primary-button'>Login</button>
+                <button disabled={isSubmitting} className='button primary-button'>{isSubmitting ? "Logging in..." : "Login"}</button>
 
 
             </form>
@@ -60,5 +66,4 @@ const Login = () => {
 }
 
 export default Login
-
 

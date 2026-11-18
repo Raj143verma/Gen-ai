@@ -83,10 +83,8 @@ const technicalQuestionSchema = new mongoose.Schema({
         type: String,
         enum: ["low", "medium", "high"],
         required: [true, "severity is required"]
-    },
-    
-    _id: false
- })
+    }
+ },{ _id: false })
 
  const preparationPlanSchema = new mongoose.Schema({
     day: {
@@ -127,9 +125,13 @@ const interviewReportSchema = new mongoose.Schema({
     behavioralQuestions: [behavioralQuestionSchema],
     skillGaps: [skillGapSchema],
     preparationPlan: [preparationPlanSchema],
-    user:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Users"
+    completedTasks: {
+        type: [String],
+        default: []
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
     },
     title: {
         type: String,

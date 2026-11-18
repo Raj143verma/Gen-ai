@@ -68,6 +68,155 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
   align-items: center;
   padding: 2rem 1.5rem 0;
 
+  &--loading {
+    justify-content: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .gen-loader {
+    width: 100%;
+    max-width: 440px;
+    background: $glass-bg;
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid $glass-border;
+    border-radius: 1.25rem;
+    padding: 2.25rem 2rem;
+    text-align: center;
+    box-shadow: 0 24px 64px $glass-shadow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+
+    &__spinner {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 3px solid rgba($blue, 0.2);
+      border-top-color: $blue;
+      animation: gen-spin 0.85s linear infinite;
+      margin-bottom: 0.35rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: $text-primary;
+    }
+
+    &__sub {
+      font-size: 0.84rem;
+      color: $text-secondary;
+      margin-bottom: 0.65rem;
+    }
+
+    &__steps {
+      width: 100%;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      text-align: left;
+    }
+
+    &__step {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.6rem 0.85rem;
+      border-radius: 0.65rem;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid $border-subtle;
+      font-size: 0.82rem;
+      color: $text-muted;
+      transition: all 0.25s ease;
+
+      &--active {
+        color: $text-primary;
+        border-color: rgba($blue, 0.4);
+        background: rgba($blue, 0.08);
+
+        .gen-loader__dot {
+          background: $blue;
+          box-shadow: 0 0 8px rgba($blue, 0.7);
+        }
+      }
+
+      &--done {
+        color: $green;
+        border-color: rgba($green, 0.3);
+        background: rgba($green, 0.06);
+
+        .gen-loader__dot {
+          background: $green;
+        }
+      }
+    }
+
+    &__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $text-muted;
+      flex-shrink: 0;
+    }
+  }
+
+  @keyframes gen-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // TOP BAR
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  .home-topbar {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.85rem;
+    margin-bottom: 0.75rem;
+
+    &__user {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: $text-secondary;
+      padding: 0.35rem 0.75rem;
+      border-radius: 2rem;
+      background: $bg-input;
+      border: 1px solid $border-subtle;
+    }
+
+    &__logout {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.38rem 0.85rem;
+      border-radius: 2rem;
+      border: 1px solid rgba(#f87171, 0.25);
+      background: rgba(#f87171, 0.08);
+      color: #f87171;
+      font-family: $font-family;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+
+      &:hover {
+        background: rgba(#f87171, 0.16);
+        border-color: rgba(#f87171, 0.45);
+      }
+    }
+  }
+
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // HEADER
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -324,15 +473,21 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
       cursor: pointer;
       transition: background 0.2s ease, border-color 0.2s ease;
 
-      &:hover {
+      &:hover,
+      &--dragging {
         background: rgba(255, 255, 255, 0.06);
-        border-color: rgba($blue, 0.45);
+        border-color: rgba($blue, 0.55);
 
         .upload-icon-wrap {
           background: rgba($blue, 0.2);
           color: color.adjust($blue, $lightness: 12%);
           transform: translateY(-2px);
         }
+      }
+
+      &--selected {
+        border-color: rgba($green, 0.45);
+        background: rgba($green, 0.04);
       }
 
       .upload-icon-wrap {
@@ -346,6 +501,11 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
         justify-content: center;
         margin-bottom: 0.8rem;
         transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+        &--done {
+          background: rgba($green, 0.14);
+          color: $green;
+        }
       }
 
       .upload-primary {
@@ -353,11 +513,30 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
         font-weight: 600;
         color: $text-primary;
         margin-bottom: 0.2rem;
+        word-break: break-word;
       }
 
       .upload-secondary {
         font-size: 0.78rem;
         color: $text-muted;
+      }
+
+      .upload-remove-btn {
+        margin-top: 0.6rem;
+        padding: 0.28rem 0.7rem;
+        border-radius: 0.4rem;
+        border: 1px solid rgba(#f87171, 0.3);
+        background: rgba(#f87171, 0.08);
+        color: #f87171;
+        font-family: $font-family;
+        font-size: 0.74rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: rgba(#f87171, 0.18);
+        }
       }
     }
 
@@ -492,6 +671,37 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
         strong {
           color: #fff;
           font-weight: 600;
+        }
+      }
+    }
+
+    // ── Inline Error Banner ────────────────────────────────────────────────
+
+    .form-error-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 0 1.5rem 0.9rem;
+      padding: 0.7rem 1rem;
+      border-radius: 0.65rem;
+      background: rgba(#f87171, 0.1);
+      border: 1px solid rgba(#f87171, 0.32);
+      color: #fca5a5;
+      font-size: 0.83rem;
+      line-height: 1.45;
+
+      button {
+        background: transparent;
+        border: none;
+        color: #fca5a5;
+        font-size: 1.15rem;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0 0.2rem;
+
+        &:hover {
+          color: #fff;
         }
       }
     }
@@ -658,6 +868,40 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
         flex-direction: column;
         gap: 0.5rem;
 
+        .plan-card-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.6rem;
+        }
+
+        .plan-score {
+          flex-shrink: 0;
+          font-size: 0.7rem;
+          font-weight: 700;
+          padding: 0.2rem 0.55rem;
+          border-radius: 2rem;
+          border: 1px solid transparent;
+
+          &--high {
+            color: $green;
+            background: rgba($green, 0.1);
+            border-color: rgba($green, 0.25);
+          }
+
+          &--medium {
+            color: #fbbf24;
+            background: rgba(#fbbf24, 0.1);
+            border-color: rgba(#fbbf24, 0.25);
+          }
+
+          &--low {
+            color: #f87171;
+            background: rgba(#f87171, 0.1);
+            border-color: rgba(#f87171, 0.25);
+          }
+        }
+
         h3 {
           font-size: 1.1rem;
           color: $text-primary;
@@ -680,6 +924,13 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
         }
       }
 
+      .plan-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
       .view-btn {
         align-self: flex-start;
         background: transparent;
@@ -694,6 +945,33 @@ $btn-gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
 
         &:hover {
           background: rgba(75, 140, 245, 0.1);
+        }
+      }
+
+      .delete-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: transparent;
+        color: $text-secondary;
+        border: 1px solid $border-subtle;
+        padding: 0.48rem 0.8rem;
+        border-radius: 0.5rem;
+        font-family: $font-family;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          color: #f87171;
+          border-color: rgba(#f87171, 0.4);
+          background: rgba(#f87171, 0.08);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
       }
     }

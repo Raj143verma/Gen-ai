@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const api = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
     withCredentials: true
 });
 
@@ -12,8 +12,10 @@ const api = axios.create({
  * @description Service function to generate an interview report by sending resume file, self-description and job description to the backend.
  */
 export const generateInterviewReport = async ({ resumeFile, selfDescription, jobDescription }) => {
- const formData = new FormData();
-    formData.append("resume", resumeFile);
+    const formData = new FormData();
+    if (resumeFile) {
+        formData.append("resume", resumeFile);
+    }
     formData.append("selfDescription", selfDescription);
     formData.append("jobDescription", jobDescription);
 
@@ -21,7 +23,7 @@ export const generateInterviewReport = async ({ resumeFile, selfDescription, job
         headers: {
             "Content-Type": "multipart/form-data"
         }
-    })
+    });
     return response.data;
 };
 
@@ -48,5 +50,57 @@ export const getInterviewReportById = async (interviewId) => {
 export const getAllInterviewReports = async () => {
     const response = await api.get("/api/interview/")
     return response.data;   
+}
+
+/**
+ * 
+ * @description Service function to delete an interview report by ID.
+ */
+export const deleteInterviewReport = async (interviewId) => {
+    const response = await api.delete(`/api/interview/${interviewId}`);
+    return response.data;
+}
+
+/**
+ * 
+ * @description Service function to get AI optimized resume suggestions for an interview report.
+ */
+export const optimizeResume = async (interviewReportId) => {
+    const response = await api.post("/api/interview/optimize-resume", { interviewReportId });
+    return response.data;
+}
+
+/**
+ * 
+ * @description Service function to download optimized resume as PDF.
+ */
+export const downloadResumePdf = async (interviewReportId) => {
+    const response = await api.post(`/api/interview/resume/pdf/${interviewReportId}`, {}, {
+        responseType: "blob"
+    });
+    return response.data;
+}
+
+/**
+ * 
+ * @description Service function to toggle a roadmap task's completion status.
+ */
+export const toggleTaskProgress = async (interviewId, taskKey) => {
+    const response = await api.patch(`/api/interview/report/${interviewId}/progress`, { taskKey });
+    return response.data;
+}
+
+/**
+ * 
+ * @description Service function to evaluate a user's practice answer using AI.
+ */
+export const evaluateAnswer = async ({ interviewReportId, question, expectedAnswer, userAnswer }) => {
+    const response = await api.post("/api/interview/evaluate-answer", {
+        interviewReportId,
+        question,
+        expectedAnswer,
+        userAnswer
+    });
+    return response.data;
 }
 

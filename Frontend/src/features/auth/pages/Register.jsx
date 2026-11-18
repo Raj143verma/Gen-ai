@@ -9,26 +9,30 @@ const navigate = useNavigate();
 const [username, setUsername] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
+const [error, setError] = useState("");
 
 const { loading, handleRegister } = useAuth()
 
-  const handleSubmit =  async(e) => {
+  const handleSubmit = async (e) => {
         e.preventDefault();
-         await handleRegister({ username, email, password })
-          navigate("/home");
+        setError("");
+        try {
+            await handleRegister({ username, email, password });
+            navigate("/home");
+        } catch (err) {
+            setError(err.response?.data?.message || err.message || "Registration failed. Please try again.");
+        }
     }
 
-     if(loading){
+     if(loading && !username && !email && !password){
       return (<main><h1>Loading........</h1></main>)
     }
-
-
-
 
   return (
      <main>
         <div className="form-container">
             <h1>Register</h1>
+            {error && <p className="error-message">{error}</p>}
 
             <form onSubmit={handleSubmit}>
 
@@ -52,7 +56,7 @@ const { loading, handleRegister } = useAuth()
                  onChange={(e) => { setPassword(e.target.value) }}
                  type="password" id="password" name="password" placeholder="Enter your password" />
               </div>
-                <button className='button primary-button'>Register</button>
+                <button disabled={loading} className='button primary-button'>{loading ? "Registering..." : "Register"}</button>
 </form>
  
        <p>Already have an account? <Link to="/login">Login</Link></p>

@@ -52,6 +52,28 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
 
   display: flex;
   align-items: stretch;
+
+  &.loading-state,
+  &.error-state {
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    p {
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      background: $glass-bg;
+      border: 1px solid $border-subtle;
+      color: $text-secondary;
+      font-size: 0.92rem;
+    }
+  }
+
+  &.error-state p {
+    color: #fca5a5;
+    border-color: rgba(#f87171, 0.35);
+    background: rgba(#f87171, 0.08);
+  }
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -74,9 +96,66 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.25rem 1.5rem;
-  gap: 2rem;
+  padding: 1.5rem 1.25rem 1.5rem;
+  gap: 1.25rem;
   overflow-y: auto;
+}
+
+.iv-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.55rem;
+  border: 1px solid $border-subtle;
+  background: $bg-input;
+  color: $text-secondary;
+  font-family: $font-family;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba($blue, 0.4);
+    color: $text-primary;
+  }
+}
+
+.iv-report-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $text-primary;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.55rem;
+  background: rgba($blue, 0.06);
+  border: 1px solid rgba($blue, 0.16);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.iv-logout-btn {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(#f87171, 0.25);
+  background: rgba(#f87171, 0.08);
+  color: #f87171;
+  font-family: $font-family;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    background: rgba(#f87171, 0.16);
+    border-color: rgba(#f87171, 0.45);
+  }
 }
 
 .score-ring {
@@ -678,5 +757,389 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
   }
 
   // Reuse existing .timeline, .timeline__item etc. — no overrides needed
+}
+
+// ── Action Button & Optimized Resume Section ─────────────────────────────────
+
+.iv-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba($blue, 0.4);
+  background: rgba($blue, 0.12);
+  color: $blue-light;
+  font-family: $font-family;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    background: rgba($blue, 0.22);
+    border-color: $blue;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.resume-box {
+  padding: 1.5rem;
+  border: 1px solid $border-subtle;
+  border-radius: 0.75rem;
+  background: $bg-item;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+
+  &__muted {
+    font-size: 0.88rem;
+    color: $text-secondary;
+  }
+
+  &__error {
+    font-size: 0.86rem;
+    color: #f87171;
+  }
+}
+
+.resume-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.resume-block {
+  border: 1px solid $border-subtle;
+  border-radius: 0.75rem;
+  background: $bg-item;
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $blue;
+  }
+
+  &__text {
+    font-size: 0.86rem;
+    color: $text-secondary;
+    line-height: 1.65;
+  }
+}
+
+.resume-exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.resume-exp-card {
+  padding: 0.85rem 1rem;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid $border-subtle;
+
+  &__head {
+    font-size: 0.88rem;
+    color: $text-primary;
+
+    span {
+      color: $text-secondary;
+      font-weight: 400;
+    }
+  }
+
+  &__meta {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: $text-muted;
+    margin-top: 0.2rem;
+  }
+
+  &__points {
+    border-top: none;
+    padding: 0.65rem 0 0;
+  }
+}
+
+// ── Right Panel — Download Resume Button ─────────────────────────────────────
+
+.rp-download {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid $border-subtle;
+
+  &__error {
+    font-size: 0.78rem;
+    color: #fca5a5;
+    line-height: 1.4;
+  }
+
+  &__btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 0.65rem;
+    background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 55%, #6366f1 100%);
+    color: #fff;
+    font-family: $font-family;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+
+    &:hover {
+      opacity: 0.94;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}
+
+// ── Practice Answer Mode (inside QuestionCard) ───────────────────────────────
+
+.practice-box {
+  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed $border-subtle;
+
+  &__toggle {
+    background: transparent;
+    border: 1px solid rgba($purple, 0.35);
+    color: $purple;
+    padding: 0.38rem 0.78rem;
+    border-radius: 0.45rem;
+    font-family: $font-family;
+    font-size: 0.77rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease;
+
+    &:hover {
+      background: rgba($purple, 0.12);
+      border-color: $purple;
+    }
+  }
+
+  &__content {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  &__textarea {
+    width: 100%;
+    background: $bg-input;
+    border: 1px solid $border-subtle;
+    border-radius: 0.55rem;
+    color: $text-primary;
+    font-family: $font-family;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    padding: 0.7rem 0.85rem;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.18s ease;
+
+    &:focus {
+      border-color: rgba($blue, 0.55);
+    }
+
+    &::placeholder {
+      color: $text-muted;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__error {
+    font-size: 0.8rem;
+    color: #fca5a5;
+  }
+}
+
+.practice-feedback {
+  padding: 0.9rem 1rem;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border-subtle;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $text-secondary;
+  }
+
+  &__score {
+    padding: 0.2rem 0.6rem;
+    border-radius: 2rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+
+    &--high {
+      color: $green;
+      background: rgba($green, 0.12);
+      border-color: rgba($green, 0.3);
+    }
+
+    &--medium {
+      color: $amber;
+      background: rgba($amber, 0.12);
+      border-color: rgba($amber, 0.3);
+    }
+
+    &--low {
+      color: #f87171;
+      background: rgba(#f87171, 0.12);
+      border-color: rgba(#f87171, 0.3);
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    strong {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $blue-light;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      li {
+        font-size: 0.83rem;
+        color: $text-secondary;
+        line-height: 1.5;
+      }
+    }
+
+    p {
+      font-size: 0.83rem;
+      color: $text-secondary;
+      line-height: 1.6;
+      padding: 0.55rem 0.75rem;
+      border-radius: 0.45rem;
+      background: rgba($blue, 0.06);
+      border-left: 2px solid rgba($blue, 0.45);
+    }
+  }
+}
+
+// ── Roadmap Progress Bar & Interactive Checklist ─────────────────────────────
+
+.roadmap-progress {
+  margin-bottom: 1.15rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.7rem;
+  background: $bg-item;
+  border: 1px solid $border-subtle;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.79rem;
+    color: $text-secondary;
+    font-weight: 500;
+  }
+
+  &__track {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, $blue, $green);
+    transition: width 0.25s ease;
+  }
+}
+
+.day-card__count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: $text-muted;
+  padding: 0.14rem 0.48rem;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+
+  &--done {
+    color: $green;
+    background: rgba($green, 0.12);
+  }
+}
+
+.day-card__task--checkable {
+  .day-card__task-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    cursor: pointer;
+    width: 100%;
+
+    input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: $green;
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.day-card__task--done {
+  .day-card__task-label span {
+    text-decoration: line-through;
+    color: $text-muted;
+  }
 }
 

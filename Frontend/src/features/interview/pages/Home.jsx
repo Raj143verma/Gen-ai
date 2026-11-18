@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hook/useinterview.js'
+import { useAuth } from '../../auth/hooks/useAuth.js'
 import { useNavigate } from 'react-router'
 
 const useTyping = (fullText, speed = 38, startDelay = 0) => {
@@ -131,6 +132,31 @@ const IconStar = () => (
   </svg>
 )
 
+const IconLogout = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <polyline points="16 17 21 12 16 7" />
+    <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+)
+
+const IconTrash = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="3 6 5 6 21 6" />
+    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+    <path d="M10 11v6" />
+    <path d="M14 11v6" />
+    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+  </svg>
+)
+
+const IconCheck = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </svg>
+)
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // TYPING STRINGS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -145,11 +171,24 @@ const SELF_DESC_HINT =
 // MAIN COMPONENT
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+const GENERATION_STEPS = [
+  "Reading your resume & profile...",
+  "Analyzing job requirements & skill gaps...",
+  "Building questions & 7-day preparation plan..."
+]
+
 const Home = () => {
 
-const {loading,generateReport, reports, getReports} = useInterview()
+const {loading,generateReport, reports, getReports, deleteReport} = useInterview()
+const { user, handleLogout } = useAuth()
 const [jobDescription, setJobDescription] = useState("")
 const [selfDescription, setSelfDescription] = useState("")
+const [resumeFile, setResumeFile] = useState(null)
+const [isDragging, setIsDragging] = useState(false)
+const [deletingId, setDeletingId] = useState(null)
+const [formError, setFormError] = useState("")
+const [isGenerating, setIsGenerating] = useState(false)
+const [loadingStep, setLoadingStep] = useState(0)
 const resumeInputRef = useRef()
 
 const navigate = useNavigate()
@@ -158,29 +197,148 @@ useEffect(() => {
   getReports()
 }, [])
 
-const handleGenerateReport =  async() => {
-  console.log("-> Starting report generation...");
-  const resumeFile = resumeInputRef.current.files[0] || null
-  const data = await generateReport({ resumeFile, selfDescription, jobDescription })
-  console.log("<- Received response from generateReport:", data);
-  if (data?._id) {
-    console.log("Navigating to:", `/interview/${data._id}`);
-    navigate(`/interview/${data._id}`)
-  } else {
-    console.error("Failed to get a valid _id from backend:", data);
+useEffect(() => {
+  if (!isGenerating) {
+    setLoadingStep(0)
+    return
+  }
+  const timer = setInterval(() => {
+    setLoadingStep((prev) => (prev < GENERATION_STEPS.length - 1 ? prev + 1 : prev))
+  }, 3500)
+  return () => clearInterval(timer)
+}, [isGenerating])
+
+const onLogout = async () => {
+  await handleLogout()
+  navigate("/login")
+}
+
+const handleFileSelect = (file) => {
+  if (!file) return
+  setFormError("")
+  const fileName = file.name.toLowerCase()
+  if (!fileName.endsWith(".pdf") && !fileName.endsWith(".docx")) {
+    setFormError("Only PDF or DOCX files are supported.")
+    return
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    setFormError("File size exceeds the 5MB limit.")
+    return
+  }
+  setResumeFile(file)
+}
+
+const handleFileChange = (e) => {
+  const file = e.target.files?.[0] || null
+  handleFileSelect(file)
+}
+
+const handleRemoveFile = (e) => {
+  e.preventDefault()
+  e.stopPropagation()
+  setResumeFile(null)
+  setFormError("")
+  if (resumeInputRef.current) {
+    resumeInputRef.current.value = ""
   }
 }
 
-if (loading) {
+const handleDragOver = (e) => {
+  e.preventDefault()
+  setIsDragging(true)
+}
+
+const handleDragLeave = (e) => {
+  e.preventDefault()
+  setIsDragging(false)
+}
+
+const handleDrop = (e) => {
+  e.preventDefault()
+  setIsDragging(false)
+  const droppedFile = e.dataTransfer?.files?.[0] || null
+  handleFileSelect(droppedFile)
+}
+
+const handleDeletePlan = async (planId) => {
+  const confirmed = window.confirm("Delete this interview plan?")
+  if (!confirmed) return
+  setDeletingId(planId)
+  setFormError("")
+  try {
+    await deleteReport(planId)
+  } catch (err) {
+    setFormError(err.response?.data?.message || "Failed to delete plan.")
+  } finally {
+    setDeletingId(null)
+  }
+}
+
+const handleGenerateReport = async () => {
+  console.log("-> Starting report generation...");
+  setFormError("")
+  const selectedResume = resumeFile || resumeInputRef.current?.files?.[0] || null;
+
+  if (!selectedResume && !selfDescription.trim()) {
+    setFormError("Please upload a resume or enter a self description before generating a report.");
+    return;
+  }
+
+  setIsGenerating(true);
+  try {
+    const data = await generateReport({ resumeFile: selectedResume, selfDescription, jobDescription });
+    console.log("<- Received response from generateReport:", data);
+    if (data?._id) {
+      console.log("Navigating to:", `/interview/${data._id}`);
+      navigate(`/interview/${data._id}`);
+    } else {
+      setFormError("Could not open the generated report. Please check your saved plans below.");
+    }
+  } catch (err) {
+    console.error("Report generation failed:", err);
+    setFormError(err.response?.data?.message || "Failed to generate interview strategy. Please try again.");
+  } finally {
+    setIsGenerating(false);
+  }
+}
+
+if (isGenerating) {
   return (
-    <main className='loading-screen'>
-      <h1>Loading your interview report...</h1>
+    <main className="home home--loading">
+      <div className="gen-loader">
+        <div className="gen-loader__spinner" />
+        <h2>Building Your Interview Plan</h2>
+        <p className="gen-loader__sub">This usually takes around 10–20 seconds.</p>
+        <ul className="gen-loader__steps">
+          {GENERATION_STEPS.map((label, idx) => (
+            <li
+              key={label}
+              className={`gen-loader__step ${idx < loadingStep ? 'gen-loader__step--done' : ''} ${idx === loadingStep ? 'gen-loader__step--active' : ''}`}
+            >
+              <span className="gen-loader__dot" />
+              <span>{label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </main>
   )
 }
 
   return (
     <main className="home">
+
+      {/* ── Top Bar ─────────────────────────────────── */}
+      <div className="home-topbar">
+        <span className="home-topbar__user">
+          <IconUser />
+          {user?.username || "Account"}
+        </span>
+        <button type="button" onClick={onLogout} className="home-topbar__logout">
+          <IconLogout />
+          Logout
+        </button>
+      </div>
 
       {/* ── Page Header ─────────────────────────────── */}
       <header className="home-header">
@@ -221,7 +379,7 @@ if (loading) {
                 id="job-description"
                 placeholder="Paste the full job description here..."
               />
-              <div className="char-count">0 / 5000 chars</div>
+              <div className="char-count">{jobDescription.length} / 5000 chars</div>
             </div>
           </div>
 
@@ -243,11 +401,37 @@ if (loading) {
                 <h3>Upload Resume</h3>
                 <span className="badge best-results">BEST RESULTS</span>
               </div>
-              <label className="upload-area" htmlFor="resume-upload">
-                <input ref={resumeInputRef} id="resume-upload" type="file" hidden accept=".pdf,.docx" />
-                <div className="upload-icon-wrap"><IconUpload /></div>
-                <p className="upload-primary">Click to upload or drag &amp; drop</p>
-                <p className="upload-secondary">PDF or DOCX (Max 5MB)</p>
+              <label
+                className={`upload-area${isDragging ? ' upload-area--dragging' : ''}${resumeFile ? ' upload-area--selected' : ''}`}
+                htmlFor="resume-upload"
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                <input
+                  ref={resumeInputRef}
+                  id="resume-upload"
+                  type="file"
+                  hidden
+                  accept=".pdf,.docx"
+                  onChange={handleFileChange}
+                />
+                {resumeFile ? (
+                  <>
+                    <div className="upload-icon-wrap upload-icon-wrap--done"><IconCheck /></div>
+                    <p className="upload-primary">{resumeFile.name}</p>
+                    <p className="upload-secondary">{(resumeFile.size / 1024).toFixed(1)} KB · Ready to analyze</p>
+                    <button type="button" className="upload-remove-btn" onClick={handleRemoveFile}>
+                      Remove file
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="upload-icon-wrap"><IconUpload /></div>
+                    <p className="upload-primary">Click to upload or drag &amp; drop</p>
+                    <p className="upload-secondary">PDF or DOCX (Max 5MB)</p>
+                  </>
+                )}
               </label>
             </div>
 
@@ -289,20 +473,30 @@ if (loading) {
           </div>
         </div>
          
+        {/* ── Inline Error Banner ─────────────────── */}
+        {formError && (
+          <div className="form-error-banner" role="alert">
+            <span>{formError}</span>
+            <button type="button" onClick={() => setFormError("")} aria-label="Dismiss error">
+              ×
+            </button>
+          </div>
+        )}
+
         {/* ── Card Footer ─────────────────────────── */}
         <footer className="card-footer">
           <div className="footer-left">
             <IconClock />
             <span className="footer-label">AI-Powered Strategy Generation</span>
             <span className="footer-separator">·</span>
-            <span className="footer-time">Approx 30s</span>
+            <span className="footer-time">Approx 15s</span>
           </div>
           <button
           onClick={handleGenerateReport}
-          disabled={loading}
+          disabled={isGenerating || loading}
           id="generate-btn" className="generate-btn" type="button">
             <IconStar />
-            {loading ? "Generating..." : "Generate My Interview Strategy"}      
+            {isGenerating ? "Generating..." : "Generate My Interview Strategy"}      
           </button>
         </footer>
       </div>
@@ -323,18 +517,40 @@ if (loading) {
               }
               if (!dynamicTitle) dynamicTitle = "Job Interview Report";
 
+              const score = typeof plan.matchScore === "number" ? plan.matchScore : null;
+              const scoreTier = score >= 75 ? "high" : score >= 50 ? "medium" : "low";
+
               return (
               <div key={plan._id} className="plan-card">
                 <div className="plan-info">
-                  <h3 style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "250px" }} title={dynamicTitle}>{dynamicTitle}</h3>
+                  <div className="plan-card-top">
+                    <h3 style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "220px" }} title={dynamicTitle}>{dynamicTitle}</h3>
+                    {score !== null && (
+                      <span className={`plan-score plan-score--${scoreTier}`}>
+                        {score}% Match
+                      </span>
+                    )}
+                  </div>
                   <p className="plan-desc">
                     {plan.jobDescription ? (plan.jobDescription.length > 100 ? plan.jobDescription.substring(0, 100) + '...' : plan.jobDescription) : "Custom self-described strategy"}
                   </p>
                   <span className="plan-date">Generated on {new Date(plan.createdAt).toLocaleDateString()}</span>
                 </div>
-                <button onClick={() => navigate(`/interview/${plan._id}`)} className="view-btn">
-                  View Plan
-                </button>
+                <div className="plan-actions">
+                  <button onClick={() => navigate(`/interview/${plan._id}`)} className="view-btn">
+                    View Plan
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeletePlan(plan._id)}
+                    disabled={deletingId === plan._id}
+                    className="delete-btn"
+                    title="Delete plan"
+                  >
+                    <IconTrash />
+                    {deletingId === plan._id ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
               </div>
             )})}
           </div>

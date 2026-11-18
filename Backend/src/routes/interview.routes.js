@@ -22,6 +22,20 @@ interviewRouter.post("/",authMiddleware.authUser,upload.single("resume"),intervi
 interviewRouter.post("/optimize-resume", authMiddleware.authUser, interviewController.optimizeResumeController);
 
 /**
+ * @route POST /api/interview/evaluate-answer
+ * @desc Evaluate user's practice answer to an interview question using AI
+ * @access Private
+ */
+interviewRouter.post("/evaluate-answer", authMiddleware.authUser, interviewController.evaluateAnswerController);
+
+/**
+ * @route PATCH /api/interview/report/:interviewId/progress
+ * @desc Toggle roadmap task completion status
+ * @access Private
+ */
+interviewRouter.patch("/report/:interviewId/progress", authMiddleware.authUser, interviewController.toggleTaskProgressController);
+
+/**
  * @route GET /api/interview/report/:interviewId
  * @desc Get the details of a specific interview report by its ID
  * @access Private
@@ -37,7 +51,14 @@ interviewRouter.get("/report/:interviewId", authMiddleware.authUser, interviewCo
 interviewRouter.get("/", authMiddleware.authUser, interviewController.getAllInterviewReportsController);
 
 /**
- * @route GET /api/interview/resume/pdf
+ * @route DELETE /api/interview/:interviewId
+ * @desc Delete a specific interview report of the logged in user
+ * @access Private
+ */
+interviewRouter.delete("/:interviewId", authMiddleware.authUser, interviewController.deleteInterviewReportController);
+
+/**
+ * @route POST /api/interview/resume/pdf/:interviewReportId
  * @desc Generate a resume PDF based on user self description, resume and job description.
  * @access Private
  */
