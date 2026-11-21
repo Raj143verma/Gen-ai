@@ -112,6 +112,11 @@ const interviewReportSchema = new mongoose.Schema({
     resumeText: {
         type: String,
     },
+    originalResumeFile: {
+        data: Buffer,
+        contentType: String,
+        fileName: String
+    },
     selfDescription: {
         type: String,
     },
@@ -129,6 +134,31 @@ const interviewReportSchema = new mongoose.Schema({
         type: [String],
         default: []
     },
+    optimizedResume: {
+        modifiedResumeText: { type: String },
+        resumeData: { type: mongoose.Schema.Types.Mixed },
+        keyChanges: { type: [String], default: [] },
+        matchedKeywords: { type: [String], default: [] },
+        suggestions: { type: [String], default: [] },
+        bulletDiffs: { type: [mongoose.Schema.Types.Mixed], default: [] }
+    },
+    cachedOptimizedPdf: {
+        data: { type: Buffer },
+        contentType: { type: String, default: "application/pdf" },
+        generatedAt: { type: Date }
+    },
+    practiceHistory: [{
+        question: { type: String, required: true },
+        category: { type: String, enum: ["technical", "behavioral"], default: "technical" },
+        mode: { type: String, enum: ["code", "text", "voice"], default: "text" },
+        language: { type: String, default: "javascript" },
+        score: { type: Number, min: 0, max: 10, default: 0 },
+        timeComplexity: { type: String },
+        spaceComplexity: { type: String },
+        strengths: { type: [String], default: [] },
+        improvements: { type: [String], default: [] },
+        submittedAt: { type: Date, default: Date.now }
+    }],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"

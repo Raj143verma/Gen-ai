@@ -1,0 +1,1185 @@
+// ── Landing Page Design Tokens & Styles ──────────────────────────────────────
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+
+$bg-obsidian: #060911;
+$bg-slate-900: #0b0f19;
+$bg-card: rgba(15, 23, 42, 0.65);
+
+$border-subtle: rgba(255, 255, 255, 0.08);
+$border-focus: rgba(56, 189, 248, 0.4);
+
+$text-bright: #f8fafc;
+$text-secondary: #94a3b8;
+$text-muted: #64748b;
+
+$blue: #38bdf8;
+$indigo: #818cf8;
+$emerald: #10b981;
+$amber: #f59e0b;
+
+// ── Root Page Shell ─────────────────────────────────────────────────────────
+.landing-page {
+  min-height: 100vh;
+  background-color: $bg-obsidian;
+  color: $text-bright;
+  font-family: $font-sans;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+// ── Engineering Dot Grid Background Mesh ────────────────────────────────────
+.lp-mesh {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: 0 0;
+  mask-image: linear-gradient(180deg, #fff 10%, rgba(255, 255, 255, 0.4) 60%, transparent 100%);
+  z-index: 0;
+}
+
+.lp-ambient-glow {
+  position: fixed;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.12) 0%, rgba(129, 140, 248, 0.06) 50%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+// ── Reusable Kicker Tag ─────────────────────────────────────────────────────
+.lp-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  color: #38bdf8;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+// ── Button Primitives ───────────────────────────────────────────────────────
+.lp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: $font-sans;
+  font-size: 0.84rem;
+  font-weight: 600;
+  border-radius: 0.55rem;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  text-decoration: none;
+
+  &--ghost {
+    background: transparent;
+    border: 1px solid transparent;
+    color: $text-secondary;
+
+    &:hover {
+      color: $text-bright;
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  &--primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+
+    &:hover {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+    }
+  }
+
+  &--hero {
+    background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.75rem 1.6rem;
+    border-radius: 0.65rem;
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
+
+    &:hover {
+      background: linear-gradient(135deg, #7dd3fc 0%, #3b82f6 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(56, 189, 248, 0.4);
+    }
+  }
+
+  &--outline {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid $border-subtle;
+    color: $text-bright;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 0.65rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+  }
+}
+
+// ── Sticky Header Navigation ────────────────────────────────────────────────
+.lp-nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  backdrop-filter: blur(16px);
+  background: rgba(6, 9, 17, 0.8);
+  border-bottom: 1px solid $border-subtle;
+
+  &__inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+
+    @media (max-width: 860px) {
+      display: none;
+    }
+  }
+
+  &__link {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: $text-secondary;
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $text-bright;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+}
+
+// ── Brand Glyph & Name ──────────────────────────────────────────────────────
+.lp-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  user-select: none;
+
+  &__glyph {
+    width: 32px;
+    height: 32px;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #38bdf8;
+  }
+
+  &__text {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  &__name {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  &__dot {
+    color: #38bdf8;
+  }
+
+  &__badge {
+    font-family: $font-mono;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.25rem;
+    background: rgba(255, 255, 255, 0.06);
+    color: $text-secondary;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+.lp-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 2rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.lp-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  animation: pulseDot 2s infinite;
+}
+
+.lp-status-text {
+  font-family: $font-mono;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #34d399;
+}
+
+// ── HERO SECTION ────────────────────────────────────────────────────────────
+.lp-hero {
+  position: relative;
+  z-index: 10;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__content {
+    max-width: 860px;
+  }
+
+  &__title {
+    font-size: 3.25rem;
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    color: #fff;
+    margin: 0 0 1.25rem 0;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    @media (max-width: 768px) {
+      font-size: 2.25rem;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1.12rem;
+    line-height: 1.6;
+    color: $text-secondary;
+    margin: 0 auto 2rem;
+    max-width: 680px;
+
+    @media (max-width: 768px) {
+      font-size: 0.98rem;
+    }
+  }
+
+  &__ctas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.75rem;
+
+    @media (max-width: 560px) {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  &__telemetry-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 0.85rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid $border-subtle;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+    @media (max-width: 768px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      padding: 1rem;
+    }
+  }
+}
+
+.lp-telemetry-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+
+  &__val {
+    font-family: $font-mono;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  &__label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+}
+
+.lp-telemetry-sep {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.08);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// ── Interactive Hero Terminal Window ────────────────────────────────────────
+.lp-hero__terminal-window {
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 1060px;
+  border-radius: 0.85rem;
+  background: #090d16;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(56, 189, 248, 0.1);
+  overflow: hidden;
+  text-align: left;
+}
+
+.lp-term-chrome {
+  background: #0f172a;
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+}
+
+.lp-term-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.lp-term-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &--red { background: #ef4444; }
+  &--yellow { background: #f59e0b; }
+  &--green { background: #10b981; }
+}
+
+.lp-term-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  overflow-x: auto;
+}
+
+.lp-term-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: $font-mono;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.4rem;
+  background: transparent;
+  border: 1px solid transparent;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &--active {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+  }
+}
+
+.lp-term-action {
+  flex-shrink: 0;
+}
+
+.lp-run-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.4rem;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(16, 185, 129, 0.25);
+    border-color: rgba(16, 185, 129, 0.6);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.lp-term-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 380px;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lp-term-editor {
+  background: #070a12;
+  padding: 1.25rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+
+  pre {
+    margin: 0;
+    font-family: $font-mono;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: #cbd5e1;
+    white-space: pre;
+  }
+}
+
+.lp-term-console {
+  background: #090d16;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $font-mono;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: $text-secondary;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  &__output {
+    margin: 0;
+    font-family: $font-mono;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #7ee787;
+    white-space: pre-wrap;
+    flex: 1;
+  }
+}
+
+.lp-term-badge {
+  margin-left: auto;
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.25rem;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+// ── Ticker Section ──────────────────────────────────────────────────────────
+.lp-ticker-section {
+  position: relative;
+  z-index: 10;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid $border-subtle;
+  border-bottom: 1px solid $border-subtle;
+  background: rgba(11, 15, 25, 0.5);
+  text-align: center;
+}
+
+.lp-ticker-label {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: $text-muted;
+  margin-bottom: 1rem;
+}
+
+.lp-ticker-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.lp-ticker-pill {
+  font-family: $font-mono;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: $text-secondary;
+  transition: all 0.18s ease;
+
+  &:hover {
+    color: #fff;
+    border-color: rgba(56, 189, 248, 0.35);
+    background: rgba(56, 189, 248, 0.08);
+  }
+}
+
+// ── FEATURES SECTION (BENTO GRID) ───────────────────────────────────────────
+.lp-features {
+  position: relative;
+  z-index: 10;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+}
+
+.lp-section-intro {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 3.5rem;
+}
+
+.lp-section-heading {
+  font-size: 2.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 0 0 0.85rem 0;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 1.85rem;
+  }
+}
+
+.lp-section-sub {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.lp-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lp-bento-card {
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  position: relative;
+
+  &:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  &--large {
+    grid-column: span 2;
+
+    @media (max-width: 1024px) {
+      grid-column: span 1;
+    }
+  }
+}
+
+.lp-bento-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+
+  &--blue {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #38bdf8;
+  }
+
+  &--amber {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    color: #fbbf24;
+  }
+
+  &--purple {
+    background: rgba(129, 140, 248, 0.12);
+    border: 1px solid rgba(129, 140, 248, 0.25);
+    color: #a5b4fc;
+  }
+
+  &--emerald {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #34d399;
+  }
+}
+
+.lp-bento-tag {
+  font-family: $font-mono;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: $text-muted;
+  margin-bottom: 0.4rem;
+}
+
+.lp-bento-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.65rem 0;
+  letter-spacing: -0.02em;
+}
+
+.lp-bento-desc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: $text-secondary;
+  margin: 0 0 1.5rem 0;
+}
+
+.lp-bento-spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lp-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: $text-bright;
+
+  svg {
+    color: #34d399;
+    flex-shrink: 0;
+  }
+}
+
+// ── ROLE READINESS SIMULATOR ────────────────────────────────────────────────
+.lp-simulator-section {
+  position: relative;
+  z-index: 10;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+}
+
+.lp-sim-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.lp-sim-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+
+.lp-sim-tab {
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $border-subtle;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &--active {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+  }
+}
+
+.lp-sim-card {
+  background: #090d16;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+    }
+  }
+}
+
+.lp-sim-badge {
+  font-family: $font-mono;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: $text-muted;
+}
+
+.lp-sim-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0.25rem 0 0 0;
+}
+
+.lp-sim-score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  @media (max-width: 640px) {
+    align-items: flex-start;
+  }
+}
+
+.lp-sim-score-val {
+  font-family: $font-mono;
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #10b981;
+  line-height: 1;
+}
+
+.lp-sim-score-label {
+  font-size: 0.72rem;
+  color: $text-secondary;
+}
+
+.lp-sim-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lp-sim-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    font-family: $font-mono;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: $text-muted;
+    letter-spacing: 0.04em;
+  }
+
+  &__text {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: $text-bright;
+    margin: 0;
+  }
+
+  &__code {
+    font-family: $font-mono;
+    font-size: 0.85rem;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    padding: 0.4rem 0.65rem;
+    border-radius: 0.4rem;
+    margin: 0;
+  }
+}
+
+.lp-sim-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.lp-sim-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: $text-secondary;
+}
+
+.lp-sim-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.86rem;
+  color: $text-secondary;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// ── ARCHITECTURAL PIPELINE (HOW IT WORKS) ───────────────────────────────────
+.lp-pipeline-section {
+  position: relative;
+  z-index: 10;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+}
+
+.lp-pipeline-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lp-pipeline-step {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid $border-subtle;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(56, 189, 248, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+.lp-step-num {
+  font-family: $font-mono;
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.1);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.lp-step-tag {
+  font-family: $font-mono;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #38bdf8;
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.lp-step-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.65rem 0;
+}
+
+.lp-step-desc {
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ── HIGH-CONVERSION TERMINAL CALL-TO-ACTION ─────────────────────────────────
+.lp-cta-section {
+  position: relative;
+  z-index: 10;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+.lp-cta-card {
+  background: #090d16;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(56, 189, 248, 0.12);
+  overflow: hidden;
+}
+
+.lp-cta-terminal-header {
+  background: #0f172a;
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lp-cta-terminal-title {
+  margin-left: 0.5rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  color: $text-secondary;
+}
+
+.lp-cta-body {
+  padding: 3.5rem 2rem;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.lp-cta-heading {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+
+  @media (max-width: 640px) {
+    font-size: 1.75rem;
+  }
+}
+
+.lp-cta-sub {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: $text-secondary;
+  margin: 0 0 2rem 0;
+}
+
+.lp-cta-action-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+}
+
+.lp-cta-guarantees {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  font-family: $font-mono;
+  font-size: 0.74rem;
+  color: $text-muted;
+  flex-wrap: wrap;
+
+  span {
+    color: #34d399;
+  }
+}
+
+// ── FOOTER ──────────────────────────────────────────────────────────────────
+.lp-footer {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid $border-subtle;
+  background: rgba(6, 9, 17, 0.9);
+  padding: 4rem 1.5rem 2rem;
+
+  &__top {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    margin-bottom: 3rem;
+
+    @media (max-width: 860px) {
+      flex-direction: column;
+    }
+  }
+
+  &__brand {
+    max-width: 340px;
+  }
+
+  &__bio {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: $text-secondary;
+    margin-top: 0.85rem;
+  }
+
+  &__cols {
+    display: flex;
+    gap: 3.5rem;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+
+    a {
+      color: $text-secondary;
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    span {
+      color: $text-muted;
+    }
+  }
+
+  &__col-title {
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: $text-bright;
+    margin-bottom: 0.35rem;
+  }
+
+  &__status-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #34d399 !important;
+  }
+
+  &__bottom {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    color: $text-muted;
+    font-family: $font-mono;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: center;
+    }
+  }
+}
+
+// ── Animations ──────────────────────────────────────────────────────────────
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}

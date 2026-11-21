@@ -65,4 +65,18 @@ interviewRouter.delete("/:interviewId", authMiddleware.authUser, interviewContro
 
 interviewRouter.post("/resume/pdf/:interviewReportId", authMiddleware.authUser, interviewController.generateResumePdfController);
 
+/**
+ * @route GET /api/interview/resume/original/:interviewId
+ * @desc Get the original uploaded resume PDF of the interview report
+ * @access Private
+ */
+interviewRouter.get("/resume/original/:interviewId", authMiddleware.authUser, interviewController.getOriginalResumePdfController);
+
+/**
+ * @route POST /api/interview/transcribe-audio
+ * @desc Transcribe audio recording into text using Gemini AI
+ * @access Private
+ */
+interviewRouter.post("/transcribe-audio", authMiddleware.authUser, upload.single("audio"), interviewController.transcribeAudioController);
+
 module.exports = interviewRouter;

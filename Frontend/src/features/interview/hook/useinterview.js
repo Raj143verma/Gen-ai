@@ -5,13 +5,17 @@ import {
     deleteInterviewReport,
     optimizeResume,
     downloadResumePdf,
+    getOriginalResumePdf,
     toggleTaskProgress,
-    evaluateAnswer
+    evaluateAnswer,
+    transcribeAudio
 } from "../services/interview.api"
 import { useContext } from "react"
 import { InterviewContext } from "../interview.context"
 
-
+// Module-level in-memory blob caches to eliminate duplicate downloads
+const pdfBlobCache = new Map();
+const originalPdfBlobCache = new Map();
 
 export const useInterview = () => {
 
@@ -87,13 +91,20 @@ export const useInterview = () => {
         }
     }
 
-    const getOptimizedResume = async (interviewReportId) => {
-        const response = await optimizeResume(interviewReportId);
+    const getOptimizedResume = async (interviewReportId, regenerate = false) => {
+        if (regenerate) {
+            pdfBlobCache.delete(interviewReportId);
+        }
+        const response = await optimizeResume(interviewReportId, regenerate);
         return response?.optimizedResume ?? response;
     }
 
     const downloadResume = async (interviewReportId, title = "optimized-resume") => {
-        const pdfBlob = await downloadResumePdf(interviewReportId);
+        let pdfBlob = pdfBlobCache.get(interviewReportId);
+        if (!pdfBlob) {
+            pdfBlob = await downloadResumePdf(interviewReportId);
+            pdfBlobCache.set(interviewReportId, pdfBlob);
+        }
         const url = window.URL.createObjectURL(new Blob([pdfBlob], { type: "application/pdf" }));
         const link = document.createElement("a");
         const safeName = String(title || "optimized-resume")
@@ -105,7 +116,7 @@ export const useInterview = () => {
         document.body.appendChild(link);
         link.click();
         link.remove();
-        window.URL.revokeObjectURL(url);
+        setTimeout(() => window.URL.revokeObjectURL(url), 2000);
     }
 
     const toggleTask = async (interviewId, taskKey) => {
@@ -144,14 +155,37 @@ export const useInterview = () => {
         }
     }
 
-    const checkPracticeAnswer = async ({ interviewReportId, question, expectedAnswer, userAnswer }) => {
+    const checkPracticeAnswer = async ({ interviewReportId, question, expectedAnswer, userAnswer, codeAnswer, language, category, mode }) => {
         const response = await evaluateAnswer({
             interviewReportId,
             question,
             expectedAnswer,
-            userAnswer
+            userAnswer,
+            codeAnswer,
+            language,
+            category,
+            mode
         });
+        if (response?.practiceHistory && Array.isArray(response.practiceHistory)) {
+            setReport((prev) => (prev && prev._id === interviewReportId ? { ...prev, practiceHistory: response.practiceHistory } : prev));
+        }
         return response?.evaluation ?? response;
+    }
+
+    const fetchOriginalResumePdf = async (interviewId) => {
+        let blob = originalPdfBlobCache.get(interviewId);
+        if (!blob) {
+            blob = await getOriginalResumePdf(interviewId);
+            originalPdfBlobCache.set(interviewId, blob);
+        }
+        return blob;
+    }
+
+    const transcribeVoiceAudio = async (audioBlob) => {
+        const formData = new FormData();
+        formData.append("audio", audioBlob, "answer-audio.webm");
+        const res = await transcribeAudio(formData);
+        return res?.transcript || "";
     }
 
     return {
@@ -165,7 +199,9 @@ export const useInterview = () => {
         deleteReport,
         getOptimizedResume,
         downloadResume,
+        fetchOriginalResumePdf,
         toggleTask,
-        checkPracticeAnswer
+        checkPracticeAnswer,
+        transcribeVoiceAudio
     }
 }

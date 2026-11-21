@@ -65,8 +65,8 @@ export const deleteInterviewReport = async (interviewId) => {
  * 
  * @description Service function to get AI optimized resume suggestions for an interview report.
  */
-export const optimizeResume = async (interviewReportId) => {
-    const response = await api.post("/api/interview/optimize-resume", { interviewReportId });
+export const optimizeResume = async (interviewReportId, regenerate = false) => {
+    const response = await api.post("/api/interview/optimize-resume", { interviewReportId, regenerate });
     return response.data;
 }
 
@@ -76,6 +76,17 @@ export const optimizeResume = async (interviewReportId) => {
  */
 export const downloadResumePdf = async (interviewReportId) => {
     const response = await api.post(`/api/interview/resume/pdf/${interviewReportId}`, {}, {
+        responseType: "blob"
+    });
+    return response.data;
+}
+
+/**
+ * 
+ * @description Service function to get the original uploaded resume PDF as blob.
+ */
+export const getOriginalResumePdf = async (interviewId) => {
+    const response = await api.get(`/api/interview/resume/original/${interviewId}`, {
         responseType: "blob"
     });
     return response.data;
@@ -94,12 +105,26 @@ export const toggleTaskProgress = async (interviewId, taskKey) => {
  * 
  * @description Service function to evaluate a user's practice answer using AI.
  */
-export const evaluateAnswer = async ({ interviewReportId, question, expectedAnswer, userAnswer }) => {
+export const evaluateAnswer = async ({ interviewReportId, question, expectedAnswer, userAnswer, codeAnswer, language, category, mode }) => {
     const response = await api.post("/api/interview/evaluate-answer", {
         interviewReportId,
         question,
         expectedAnswer,
-        userAnswer
+        userAnswer,
+        codeAnswer,
+        language,
+        category,
+        mode
+    });
+    return response.data;
+}
+
+/**
+ * @description Service function to transcribe audio recording using Gemini AI
+ */
+export const transcribeAudio = async (formData) => {
+    const response = await api.post("/api/interview/transcribe-audio", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
     });
     return response.data;
 }
