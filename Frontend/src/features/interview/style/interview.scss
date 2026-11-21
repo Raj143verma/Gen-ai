@@ -2,36 +2,38 @@
 @use 'sass:color';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// DESIGN TOKENS  (mirrors home.scss — keep in sync)
+// DESIGN TOKENS  (Muted Eucalyptus / Sage Teal #91AAA5 Theme)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 $font-family:   'Inter', system-ui, -apple-system, sans-serif;
 
-$bg-page-from:  #0f172a;
-$bg-page-to:    #020617;
+// ── Unified Sage Teal Page Background (#91AAA5)
+$bg-page-from:  #91aaa5;
+$bg-page-to:    #91aaa5;
 
-$glass-bg:      rgba(15, 23, 44, 0.72);
-$glass-border:  rgba(255, 255, 255, 0.07);
-$glass-shadow:  rgba(0, 0, 0, 0.55);
+// ── Surface Cards
+$glass-bg:      #ffffff;
+$glass-border:  rgba(0, 0, 0, 0.08);
+$glass-shadow:  rgba(0, 0, 0, 0.05);
 
-$bg-input:      rgba(255, 255, 255, 0.04);
-$bg-item:       rgba(255, 255, 255, 0.035);
+$bg-input:      #fcfbf9;
+$bg-item:       #ffffff;
 
-$border-subtle: rgba(255, 255, 255, 0.08);
-$border-focus:  #4b8cf5;
+$border-subtle: rgba(0, 0, 0, 0.08);
+$border-focus:  #2563eb;
 
-$text-primary:  #f1f5f9;
-$text-secondary:#94a3b8;
-$text-muted:    #475569;
+$text-primary:  #18181b;
+$text-secondary:#52525b;
+$text-muted:    #78716c;
 
-$blue:          #4b8cf5;
-$blue-light:    #bfdbfe;
-$green:         #34d399;
-$purple:        #818cf8;
-$amber:         #fbbf24;
+$blue:          #2563eb;
+$blue-light:    #1d4ed8;
+$green:         #059669;
+$purple:        #6366f1;
+$amber:         #d97706;
 
-$glow-blue:     rgba(59, 130, 246, 0.18);
-$glow-purple:   rgba(129, 140, 248, 0.12);
+$glow-blue:     rgba(145, 170, 165, 0.25);
+$glow-purple:   rgba(130, 156, 151, 0.2);
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // PAGE SHELL
@@ -934,7 +936,8 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
 // ── Resume Document Viewer (In-Place Authentic Paper Look) ───────────────────
 
 .resume-paper-wrapper {
-  background: rgba(0, 0, 0, 0.45);
+  background: #7d9691;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   padding: 1.5rem;
   border-radius: 0.85rem;
   display: flex;
@@ -1116,7 +1119,8 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
   width: 100%;
   display: flex;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
+  background: #7d9691;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   padding: 1.25rem;
   border-radius: 0.85rem;
   overflow-x: auto;
@@ -1126,10 +1130,10 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
   width: 100%;
   max-width: 860px;
   height: 980px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   background: #ffffff;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     height: 650px;
@@ -1148,7 +1152,7 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1.1rem;
-  background: rgba(255, 255, 255, 0.035);
+  background: #ffffff;
   border: 1px solid $border-subtle;
   border-radius: 0.65rem;
 
@@ -1180,7 +1184,7 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
   border: 1px solid $border-subtle;
   border-radius: 0.75rem;
   background: #ffffff;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 
   @media (max-width: 768px) {
     height: 620px;
@@ -1191,10 +1195,9 @@ $glow-purple:   rgba(129, 140, 248, 0.12);
   position: relative;
   border: 1px solid $border-subtle;
   border-radius: 0.85rem;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(12px);
+  background: #ffffff;
   padding: 2.25rem 2.5rem;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
 
   @media (max-width: 640px) {
     padding: 1.25rem 1rem;
@@ -2831,9 +2834,9 @@ mark.ats-highlight-mark {
   gap: 1.5rem;
   padding: 1.25rem 1.5rem;
   border-radius: 1rem;
-  background: linear-gradient(135deg, rgba(30, 58, 138, 0.25) 0%, rgba(15, 23, 42, 0.6) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.25);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background: #ffffff;
+  border: 1px solid $border-subtle;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -2847,7 +2850,7 @@ mark.ats-highlight-mark {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #60a5fa;
+    color: #2563eb;
     margin-bottom: 0.4rem;
   }
 
@@ -2888,25 +2891,25 @@ mark.ats-highlight-mark {
   white-space: nowrap;
 
   &--primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #18181b;
+    border: 1px solid #18181b;
     color: #fff;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 4px 12px rgba(24, 24, 27, 0.2);
 
     &:hover {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      background: #27272a;
       transform: translateY(-1px);
     }
   }
 
   &--secondary {
-    background: rgba(255, 255, 255, 0.06);
+    background: #ffffff;
     border: 1px solid $border-subtle;
     color: $text-primary;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: #fbfaf8;
+      border-color: rgba(0, 0, 0, 0.18);
     }
   }
 }
@@ -2923,11 +2926,11 @@ mark.ats-highlight-mark {
 }
 
 .cad-hero-card {
-  background: $glass-bg;
-  border: 1px solid $glass-border;
+  background: #ffffff;
+  border: 1px solid $border-subtle;
   border-radius: 1rem;
   padding: 1.4rem;
-  box-shadow: 0 8px 24px $glass-shadow;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
 }
@@ -2936,8 +2939,8 @@ mark.ats-highlight-mark {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(160deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.5) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.22);
+  background: #ffffff;
+  border: 1px solid $border-subtle;
 }
 
 .cad-gauge-wrapper {
@@ -2955,17 +2958,17 @@ mark.ats-highlight-mark {
 
 .cad-gauge-track {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.08);
+  stroke: rgba(0, 0, 0, 0.07);
   stroke-width: 3.2;
 }
 
 .cad-gauge-fill {
   fill: none;
-  stroke: #10b981;
+  stroke: #059669;
   stroke-width: 3.2;
   stroke-linecap: round;
   transition: stroke-dasharray 0.8s ease;
-  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));
+  filter: drop-shadow(0 0 6px rgba(5, 150, 105, 0.35));
 }
 
 .cad-gauge-content {
@@ -2980,7 +2983,7 @@ mark.ats-highlight-mark {
 .cad-gauge-num {
   font-size: 2.1rem;
   font-weight: 800;
-  color: #fff;
+  color: #18181b;
   line-height: 1;
 }
 
@@ -3048,8 +3051,8 @@ mark.ats-highlight-mark {
 }
 
 .cad-formula-box {
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #fbf9f4;
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 0.75rem;
   padding: 0.85rem 1rem;
 }
@@ -3066,7 +3069,7 @@ mark.ats-highlight-mark {
   margin-bottom: 0.65rem;
 
   svg {
-    color: #fbbf24;
+    color: #d97706;
   }
 }
 
@@ -3081,8 +3084,8 @@ mark.ats-highlight-mark {
 }
 
 .cad-formula-pill {
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 0.5rem;
   padding: 0.5rem;
   text-align: center;
@@ -3093,7 +3096,7 @@ mark.ats-highlight-mark {
   &__val {
     font-size: 0.92rem;
     font-weight: 700;
-    color: #fff;
+    color: #18181b;
   }
 
   &__label {
@@ -3118,8 +3121,8 @@ mark.ats-highlight-mark {
 }
 
 .cad-pillar-card {
-  background: $glass-bg;
-  border: 1px solid $glass-border;
+  background: #ffffff;
+  border: 1px solid $border-subtle;
   border-radius: 0.85rem;
   padding: 1.15rem;
   display: flex;
@@ -3128,14 +3131,15 @@ mark.ats-highlight-mark {
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(59, 130, 246, 0.35);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
 
     .cad-pillar-cta {
-      color: #60a5fa;
+      color: #2563eb;
     }
   }
 }
@@ -3156,26 +3160,26 @@ mark.ats-highlight-mark {
   justify-content: center;
 
   &--blue {
-    background: rgba(59, 130, 246, 0.15);
-    color: #60a5fa;
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    background: rgba(37, 99, 235, 0.1);
+    color: #2563eb;
+    border: 1px solid rgba(37, 99, 235, 0.25);
   }
 
   &--purple {
-    background: rgba(129, 140, 248, 0.15);
-    color: #a5b4fc;
-    border: 1px solid rgba(129, 140, 248, 0.25);
+    background: rgba(99, 102, 241, 0.1);
+    color: #4f46e5;
+    border: 1px solid rgba(99, 102, 241, 0.25);
   }
 
   &--emerald {
-    background: rgba(16, 185, 129, 0.15);
-    color: #6ee7b7;
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
     border: 1px solid rgba(16, 185, 129, 0.25);
   }
 
   &--amber {
-    background: rgba(245, 158, 11, 0.15);
-    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
     border: 1px solid rgba(245, 158, 11, 0.25);
   }
 }
@@ -3191,7 +3195,7 @@ mark.ats-highlight-mark {
 .cad-pillar-value {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #fff;
+  color: #18181b;
   line-height: 1.1;
   margin-bottom: 0.2rem;
 }
@@ -3353,8 +3357,8 @@ mark.ats-highlight-mark {
 }
 
 .cad-gap-item {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #fdfcfb;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 0.75rem;
   padding: 1rem;
   display: flex;
@@ -3362,20 +3366,20 @@ mark.ats-highlight-mark {
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.12);
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.15);
   }
 
   &--high {
-    border-left: 3px solid #f87171;
+    border-left: 3px solid #dc2626;
   }
 
   &--medium {
-    border-left: 3px solid #fbbf24;
+    border-left: 3px solid #d97706;
   }
 
   &--low {
-    border-left: 3px solid #60a5fa;
+    border-left: 3px solid #2563eb;
   }
 
   &__top {
@@ -3393,18 +3397,18 @@ mark.ats-highlight-mark {
   border-radius: 0.3rem;
 
   &--high {
-    background: rgba(239, 68, 68, 0.2);
-    color: #fca5a5;
+    background: rgba(220, 38, 38, 0.12);
+    color: #dc2626;
   }
 
   &--medium {
-    background: rgba(245, 158, 11, 0.2);
-    color: #fde68a;
+    background: rgba(217, 119, 6, 0.12);
+    color: #d97706;
   }
 
   &--low {
-    background: rgba(59, 130, 246, 0.2);
-    color: #93c5fd;
+    background: rgba(37, 99, 235, 0.12);
+    color: #2563eb;
   }
 }
 
@@ -3416,7 +3420,7 @@ mark.ats-highlight-mark {
 .cad-gap-skill-name {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #fff;
+  color: #18181b;
   margin-bottom: 0.35rem;
 }
 
@@ -3434,21 +3438,21 @@ mark.ats-highlight-mark {
   gap: 0.45rem;
   padding: 0.4rem 0.75rem;
   border-radius: 0.45rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid $border-subtle;
-  color: $text-primary;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #18181b;
   font-size: 0.74rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.09);
-    border-color: rgba(255, 255, 255, 0.18);
+    background: #fbfaf8;
+    border-color: rgba(0, 0, 0, 0.2);
   }
 
   svg {
-    color: #34d399;
+    color: #059669;
   }
 }
 
@@ -3456,9 +3460,9 @@ mark.ats-highlight-mark {
 .cad-roadmap-summary-badge {
   font-size: 0.76rem;
   font-weight: 700;
-  color: #a5b4fc;
-  background: rgba(129, 140, 248, 0.1);
-  border: 1px solid rgba(129, 140, 248, 0.25);
+  color: #4f46e5;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
   padding: 0.25rem 0.7rem;
   border-radius: 2rem;
 }
@@ -3474,24 +3478,24 @@ mark.ats-highlight-mark {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #fdfcfb;
+  border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 0.65rem;
   cursor: pointer;
   transition: all 0.15s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(129, 140, 248, 0.35);
+    background: #ffffff;
+    border-color: rgba(99, 102, 241, 0.35);
 
     .cad-day-jump-link {
-      color: #a5b4fc;
+      color: #4f46e5;
     }
   }
 
   &--complete {
-    background: rgba(16, 185, 129, 0.04);
-    border-color: rgba(16, 185, 129, 0.18);
+    background: rgba(16, 185, 129, 0.05);
+    border-color: rgba(16, 185, 129, 0.2);
   }
 }
 
@@ -3508,8 +3512,8 @@ mark.ats-highlight-mark {
   font-weight: 700;
   padding: 0.2rem 0.55rem;
   border-radius: 0.4rem;
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.06);
+  color: #18181b;
   flex-shrink: 0;
 }
 
@@ -3537,7 +3541,7 @@ mark.ats-highlight-mark {
   &__bar {
     width: 90px;
     height: 6px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.08);
     border-radius: 3px;
     overflow: hidden;
   }
@@ -3575,8 +3579,8 @@ mark.ats-highlight-mark {
   font-weight: 700;
   padding: 0.25rem 0.65rem;
   border-radius: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   color: $text-primary;
 }
 
@@ -3587,8 +3591,8 @@ mark.ats-highlight-mark {
 }
 
 .cad-practice-card {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #fdfcfb;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 0.75rem;
   padding: 1rem;
   display: flex;
@@ -3617,13 +3621,13 @@ mark.ats-highlight-mark {
   border-radius: 0.3rem;
 
   &--technical {
-    background: rgba(59, 130, 246, 0.15);
-    color: #60a5fa;
+    background: rgba(37, 99, 235, 0.1);
+    color: #2563eb;
   }
 
   &--behavioral {
-    background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
   }
 }
 
@@ -3632,7 +3636,7 @@ mark.ats-highlight-mark {
   font-weight: 600;
   padding: 0.12rem 0.45rem;
   border-radius: 0.3rem;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.05);
   color: $text-secondary;
 }
 
@@ -3641,8 +3645,8 @@ mark.ats-highlight-mark {
   font-weight: 700;
   padding: 0.12rem 0.4rem;
   border-radius: 0.3rem;
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
 }
 
 .cad-score-badge {
@@ -3652,21 +3656,21 @@ mark.ats-highlight-mark {
   border-radius: 0.4rem;
 
   &--high {
-    background: rgba(16, 185, 129, 0.18);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    color: #6ee7b7;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    color: #059669;
   }
 
   &--med {
-    background: rgba(245, 158, 11, 0.18);
-    border: 1px solid rgba(245, 158, 11, 0.35);
-    color: #fde68a;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    color: #d97706;
   }
 
   &--low {
-    background: rgba(239, 68, 68, 0.18);
-    border: 1px solid rgba(239, 68, 68, 0.35);
-    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.28);
+    color: #dc2626;
   }
 }
 
@@ -3689,9 +3693,9 @@ mark.ats-highlight-mark {
   font-weight: 600;
   padding: 0.15rem 0.55rem;
   border-radius: 0.35rem;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #38bdf8;
+  background: #f4f2eb;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #2563eb;
   font-family: monospace;
 }
 
@@ -3699,29 +3703,29 @@ mark.ats-highlight-mark {
   font-size: 0.76rem;
   line-height: 1.4;
   color: $text-secondary;
-  background: rgba(255, 255, 255, 0.02);
-  border-left: 2px solid #34d399;
+  background: #f9f8f4;
+  border-left: 2px solid #059669;
   padding: 0.4rem 0.65rem;
   border-radius: 0 0.35rem 0.35rem 0;
 
   strong {
-    color: #6ee7b7;
+    color: #059669;
   }
 }
 
 .cad-practice-empty {
   text-align: center;
   padding: 2.5rem 1.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  background: #fdfcfb;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
   border-radius: 0.85rem;
 
   &__icon {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: rgba(59, 130, 246, 0.1);
-    color: #60a5fa;
+    background: rgba(37, 99, 235, 0.1);
+    color: #2563eb;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3731,7 +3735,7 @@ mark.ats-highlight-mark {
   h4 {
     font-size: 1.05rem;
     font-weight: 700;
-    color: #fff;
+    color: #18181b;
     margin: 0 0 0.4rem 0;
   }
 
@@ -3754,8 +3758,9 @@ mark.ats-highlight-mark {
 
 // ── AI Recommendations ──
 .cad-recommendations-card {
-  border-color: rgba(245, 158, 11, 0.25);
-  background: linear-gradient(160deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 27, 75, 0.35) 100%);
+  border-color: rgba(245, 158, 11, 0.3);
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
 }
 
 .cad-rec-grid {
@@ -3765,8 +3770,8 @@ mark.ats-highlight-mark {
 }
 
 .cad-rec-item {
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #fdfcfb;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 0.75rem;
   padding: 1.15rem;
   display: flex;
@@ -3777,8 +3782,8 @@ mark.ats-highlight-mark {
     width: 32px;
     height: 32px;
     border-radius: 0.5rem;
-    background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.12);
+    color: #d97706;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3793,7 +3798,7 @@ mark.ats-highlight-mark {
   &__title {
     font-size: 0.88rem;
     font-weight: 700;
-    color: #fff;
+    color: #18181b;
     margin: 0 0 0.3rem 0;
   }
 
@@ -3810,7 +3815,7 @@ mark.ats-highlight-mark {
     gap: 0.35rem;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #60a5fa;
+    color: #2563eb;
     background: transparent;
     border: none;
     padding: 0;
@@ -3818,7 +3823,7 @@ mark.ats-highlight-mark {
     transition: all 0.15s ease;
 
     &:hover {
-      color: #93c5fd;
+      color: #1d4ed8;
       gap: 0.5rem;
     }
   }
@@ -3837,26 +3842,26 @@ mark.ats-highlight-mark {
   gap: 0.5rem;
   padding: 0.65rem 0.85rem;
   border-radius: 0.6rem;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.25) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.35);
-  color: #93c5fd;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.28);
+  color: #2563eb;
   font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.18s ease;
 
   &:hover {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(37, 99, 235, 0.35) 100%);
-    border-color: rgba(59, 130, 246, 0.5);
-    color: #fff;
+    background: rgba(37, 99, 235, 0.18);
+    border-color: rgba(37, 99, 235, 0.45);
+    color: #1d4ed8;
     transform: translateY(-1px);
   }
 
   &--active {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    background: #18181b;
+    border-color: #18181b;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(24, 24, 27, 0.2);
   }
 }
 

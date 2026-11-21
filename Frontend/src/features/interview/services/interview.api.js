@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_URL || "http://3.26.169.210:3000",
     withCredentials: true
 });
 
@@ -40,7 +40,7 @@ export const getInterviewReportById = async (interviewId) => {
         }
     })
     console.log("API Response:", response.data);
-    return response.data;   
+    return response.data;
 }
 
 /**
@@ -49,7 +49,7 @@ export const getInterviewReportById = async (interviewId) => {
  */
 export const getAllInterviewReports = async () => {
     const response = await api.get("/api/interview/")
-    return response.data;   
+    return response.data;
 }
 
 /**

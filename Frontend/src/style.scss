@@ -13,10 +13,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 // ── Root Shell ───────────────────────────────────────────────────────────────
-// All pages inherit this base dark background.
-// This eliminates any white flash or edge-strip mismatch.
+// Universal Muted Eucalyptus / Sage Teal Theme (#91AAA5) across the entire project.
+// Delivers a calm, bespoke, architectural senior developer-grade aesthetic.
 html {
   scroll-behavior: smooth;
+  background-color: #91aaa5;
 }
 
 html,
@@ -26,11 +27,9 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 
-
-  // Deep space dark — matches the home page gradient start colour.
-  // Every other page that doesn't set its own bg inherits this.
-  background-color: #0a0d1a;
-  color: #f1f5f9;
+  // Unified Sage Teal canvas
+  background-color: #91aaa5;
+  color: #18181b;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -44,6 +43,7 @@ body {
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: #91aaa5;
 }
 
 // ── Global Utility ───────────────────────────────────────────────────────────
