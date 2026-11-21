@@ -26,6 +26,11 @@ app.use(cors({
             return callback(null, true);
         }
 
+        // Allow any Vercel deployment (preview or production)
+        if (/^https:\/\/.*\.vercel\.app$/.test(origin)) {
+            return callback(null, true);
+        }
+
         return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
     credentials: true,

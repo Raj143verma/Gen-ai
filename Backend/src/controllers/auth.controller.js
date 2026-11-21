@@ -45,12 +45,13 @@ const isUserAlreadyRegistered = await userModel.findOne({
     res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 24 * 60 * 60 * 1000
     })
 
-      res.status(201).json({
+    res.status(201).json({
         message: "User registered successfully",
+        token,
         user: {
             id: user._id,
             username: user.username,
@@ -91,11 +92,12 @@ async function loginUserController(req, res) {
     res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 24 * 60 * 60 * 1000
     })
     res.status(200).json({
         message: "User logged in successfully",
+        token,
         user: { 
             id: user._id,
             username: user.username,
@@ -112,7 +114,7 @@ async function loginUserController(req, res) {
  *  @access public
  */
 async function logoutUserController(req, res) {
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.headers.authorization?.replace(/^Bearer\s+/i, "");
 
     if (token) {
         await tokenBlacklistModel.create({ token });

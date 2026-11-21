@@ -14,6 +14,9 @@ export const useAuth = () => {
         setLoading(true);
         try {
             const data = await login({ email, password });
+            if (data?.token) {
+                localStorage.setItem("token", data.token);
+            }
             setUser(data.user);
             return data.user;
         } catch (err) {
@@ -27,6 +30,9 @@ export const useAuth = () => {
         setLoading(true);
         try {
             const data = await register({ username, email, password });
+            if (data?.token) {
+                localStorage.setItem("token", data.token);
+            }
             setUser(data.user);
             return data.user;
         } catch (err) {
@@ -41,8 +47,10 @@ export const useAuth = () => {
         setLoading(true);
         try{
             await logout();
+            localStorage.removeItem("token");
             setUser(null);
         } catch (err){
+            localStorage.removeItem("token");
             console.error("Logout failed:", err);
         } finally {
             setLoading(false);

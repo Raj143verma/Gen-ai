@@ -2,9 +2,22 @@ import axios from 'axios';
 
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || "http://3.26.169.210:3000",
+    baseURL: import.meta.env.VITE_API_URL || "",
     withCredentials: true
 });
+
+// Automatically attach Bearer token from localStorage for all requests
+api.interceptors.request.use((config) => {
+    try {
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+    } catch {
+        // ignore storage access errors
+    }
+    return config;
+}, (error) => Promise.reject(error));
 
 
 /**
