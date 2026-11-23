@@ -1,124 +1,340 @@
-main {
+// ── Authentication Form Styling (Human-Crafted, Production Standard) ────────
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+$bg-primary: #91aaa5;
+$bg-card: #ffffff;
+$bg-input: #fbfdfc;
+
+$text-primary: #15221f;
+$text-secondary: #425450;
+$text-muted: #647571;
+
+$accent-primary: #1b4d46;
+$accent-hover: #133934;
+$accent-halo: rgba(27, 77, 70, 0.12);
+
+$border-subtle: rgba(21, 34, 31, 0.08);
+$border-input: #dce5e2;
+
+$shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 25, 0.04);
+
+.auth-page {
   min-height: 100vh;
   width: 100%;
-  background-color: #91aaa5;
+  background-color: $bg-primary;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
+  position: relative;
+  font-family: $font-sans;
+  color: $text-primary;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-  .form-container {
-    width: 100%;
-    max-width: 420px;
+// ── Background Texture ──────────────────────────────────────────────────────
+.auth-mesh {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.3) 80%, transparent 100%);
+  z-index: 0;
+}
+
+// ── Back to Home Link ───────────────────────────────────────────────────────
+.auth-nav-top {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 10;
+
+  @media (max-width: 600px) {
+    top: 1rem;
+    left: 1rem;
+  }
+}
+
+.auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: $text-primary;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.15s ease;
+
+  &:hover {
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 1.25rem;
-    padding: 2.5rem 2.25rem;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transform: translateX(-2px);
+  }
+
+  svg {
+    color: $accent-primary;
+  }
+}
+
+// ── Auth Elevated Card ──────────────────────────────────────────────────────
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-radius: 1.25rem;
+  padding: 2.75rem 2.25rem 2.25rem;
+  box-shadow: $shadow-card;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+
+  @media (max-width: 480px) {
+    padding: 2rem 1.5rem;
+  }
+
+  &__brand {
     display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    margin-bottom: 0.25rem;
+  }
 
-    h1 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: #18181b;
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
+  &__header {
+    text-align: center;
+  }
 
-    .error-message {
-      color: #b91c1c;
-      font-size: 0.85rem;
-      background-color: #fef2f2;
-      border: 1px solid #fecaca;
-      padding: 0.6rem 0.85rem;
-      border-radius: 0.5rem;
-      margin-bottom: 0.25rem;
-      font-weight: 500;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-
-      label {
-        font-size: 0.84rem;
-        font-weight: 600;
-        color: #27272a;
-        letter-spacing: 0.01em;
-      }
-
-      input {
-        background: #fdfcfb;
-        border: 1px solid #d8d4c8;
-        outline: none;
-        padding-inline: 1rem;
-        padding-block: 0.75rem;
-        border-radius: 0.65rem;
-        font-size: 0.92rem;
-        color: #18181b;
-        transition: border-color 0.18s ease, box-shadow 0.18s ease;
-
-        &::placeholder {
-          color: #a1a1aa;
-        }
-
-        &:focus {
-          border-color: #2563eb;
-          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-        }
-      }
-    }
-
-    .button.primary-button {
-      background: #18181b;
-      color: #ffffff;
-      font-size: 0.92rem;
-      font-weight: 600;
-      padding: 0.8rem 1.25rem;
-      border-radius: 0.65rem;
-      border: none;
-      cursor: pointer;
-      margin-top: 0.4rem;
-      transition: background 0.18s ease, transform 0.1s ease;
-
-      &:hover {
-        background: #27272a;
-      }
-
-      &:active {
-        transform: scale(0.98);
-      }
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-    }
+  &__footer {
+    text-align: center;
+    padding-top: 0.5rem;
 
     p {
-      font-size: 0.88rem;
-      color: #52525b;
-      text-align: center;
-      margin-top: 0.25rem;
+      font-size: 0.86rem;
+      color: $text-secondary;
+      margin: 0;
 
       a {
-        color: #2563eb;
-        font-weight: 600;
+        color: $accent-primary;
+        font-weight: 700;
         text-decoration: none;
+        margin-left: 0.25rem;
+        transition: color 0.15s ease;
 
         &:hover {
           text-decoration: underline;
         }
       }
     }
+  }
+}
+
+.auth-brand-glyph {
+  width: 32px;
+  height: 32px;
+  border-radius: 0.55rem;
+  background: $accent-primary;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-brand-name {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+}
+
+.auth-brand-dot {
+  color: $accent-primary;
+}
+
+.auth-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: $text-primary;
+  margin: 0 0 0.35rem;
+}
+
+.auth-subtitle {
+  font-size: 0.88rem;
+  color: $text-secondary;
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: 340px;
+}
+
+// ── Alert Banner ────────────────────────────────────────────────────────────
+.auth-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.65rem;
+  color: #b91c1c;
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.4;
+
+  svg {
+    flex-shrink: 0;
+    color: #ef4444;
+  }
+}
+
+// ── Form Elements ───────────────────────────────────────────────────────────
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: $text-primary;
+  }
+
+  input {
+    width: 100%;
+    background: $bg-input;
+    border: 1px solid $border-input;
+    outline: none;
+    padding: 0.75rem 1rem;
+    border-radius: 0.65rem;
+    font-size: 0.92rem;
+    color: $text-primary;
+    font-family: $font-sans;
+    transition: all 0.18s ease;
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+
+    &:focus {
+      border-color: $accent-primary;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px $accent-halo;
+    }
+  }
+}
+
+.auth-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    padding-right: 2.75rem;
+  }
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 0.85rem;
+  background: transparent;
+  border: none;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-muted;
+  cursor: pointer;
+  border-radius: 0.35rem;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.auth-field-hint {
+  font-size: 0.74rem;
+  color: $text-muted;
+  margin-top: -0.15rem;
+}
+
+// ── Primary Brand Button ────────────────────────────────────────────────────
+.auth-btn-primary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  background: $accent-primary;
+  color: #ffffff;
+  font-size: 0.94rem;
+  font-weight: 600;
+  font-family: $font-sans;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.65rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(27, 77, 70, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover:not(:disabled) {
+    background: $accent-hover;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(27, 77, 70, 0.35);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.99);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.auth-spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ── Trust Row ───────────────────────────────────────────────────────────────
+.auth-trust-row {
+  text-align: center;
+  border-top: 1px solid $border-subtle;
+  padding-top: 1.15rem;
+
+  span {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: $text-muted;
+    letter-spacing: 0.02em;
   }
 }
