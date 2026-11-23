@@ -71,6 +71,13 @@ const IconAlertCircle = () => (
   </svg>
 )
 
+const IconShieldCheck = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    <path d="m9 12 2 2 4-4" />
+  </svg>
+)
+
 export default function Login() {
   const navigate = useNavigate()
   const { handleLogin } = useAuth()
@@ -144,7 +151,7 @@ export default function Login() {
         {/* Title & Subtitle */}
         <div className="auth-card__header">
           <h1 className="auth-title">Welcome Back</h1>
-          <p className="auth-subtitle">Log in to continue your personalized interview preparation.</p>
+          <p className="auth-subtitle">Log in to continue your interview preparation.</p>
         </div>
 
         {/* Info or Error Banners */}
@@ -168,7 +175,7 @@ export default function Login() {
 
         {/* Divider */}
         <div className="auth-divider">
-          <span>or sign in with email</span>
+          <span>or continue with email</span>
         </div>
 
         {/* Login Form */}
@@ -193,7 +200,16 @@ export default function Login() {
           </div>
 
           <div className="auth-input-group">
-            <label htmlFor="password">Password</label>
+            <div className="auth-label-row">
+              <label htmlFor="password">Password</label>
+              <button
+                type="button"
+                className="auth-forgot-link"
+                onClick={() => setInfoMsg("Password reset link will be sent to your email.")}
+              >
+                Forgot password?
+              </button>
+            </div>
             <div className="auth-input-wrapper">
               <span className="auth-input-left-icon">
                 <IconLock />
@@ -244,7 +260,10 @@ export default function Login() {
 
         {/* Trust Badges */}
         <div className="auth-trust-row">
-          <span>🔒 100% Free Workspace • Instant Access</span>
+          <span className="auth-trust-badge">
+            <IconShieldCheck />
+            <span>Free Workspace • Instant Access • No Card Needed</span>
+          </span>
         </div>
       </div>
     </main>
