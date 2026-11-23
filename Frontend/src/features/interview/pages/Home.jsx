@@ -96,6 +96,12 @@ const IconDoc = () => (
   </svg>
 )
 
+const IconSparkles = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
+  </svg>
+)
+
 const IconUser = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -329,16 +335,25 @@ if (isGenerating) {
     <main className="home">
 
       {/* ── Top Bar ─────────────────────────────────── */}
-      <div className="home-topbar">
-        <span className="home-topbar__user">
-          <IconUser />
-          {user?.username || "Account"}
-        </span>
-        <button type="button" onClick={onLogout} className="home-topbar__logout">
-          <IconLogout />
-          Logout
-        </button>
-      </div>
+      <header className="home-topbar">
+        <div className="home-topbar__brand" onClick={() => navigate("/")}>
+          <div className="home-brand-glyph">
+            <IconSparkles />
+          </div>
+          <span className="home-brand-name">Intervue<span className="home-brand-dot">.AI</span></span>
+        </div>
+
+        <div className="home-topbar__actions">
+          <span className="home-topbar__user">
+            <IconUser />
+            <span>{user?.username || "Account"}</span>
+          </span>
+          <button type="button" onClick={onLogout} className="home-topbar__logout">
+            <IconLogout />
+            <span>Logout</span>
+          </button>
+        </div>
+      </header>
 
       {/* ── Page Header ─────────────────────────────── */}
       <header className="home-header">
@@ -524,7 +539,7 @@ if (isGenerating) {
               <div key={plan._id} className="plan-card">
                 <div className="plan-info">
                   <div className="plan-card-top">
-                    <h3 style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "220px" }} title={dynamicTitle}>{dynamicTitle}</h3>
+                    <h3 className="plan-card-title" title={dynamicTitle}>{dynamicTitle}</h3>
                     {score !== null && (
                       <span className={`plan-score plan-score--${scoreTier}`}>
                         {score}% Match
@@ -532,13 +547,14 @@ if (isGenerating) {
                     )}
                   </div>
                   <p className="plan-desc">
-                    {plan.jobDescription ? (plan.jobDescription.length > 100 ? plan.jobDescription.substring(0, 100) + '...' : plan.jobDescription) : "Custom self-described strategy"}
+                    {plan.jobDescription ? (plan.jobDescription.length > 120 ? plan.jobDescription.substring(0, 120).trim() + '...' : plan.jobDescription) : "Custom self-described strategy"}
                   </p>
                   <span className="plan-date">Generated on {new Date(plan.createdAt).toLocaleDateString()}</span>
                 </div>
                 <div className="plan-actions">
                   <button onClick={() => navigate(`/interview/${plan._id}`)} className="view-btn">
-                    View Plan
+                    <span>View Plan</span>
+                    <span>→</span>
                   </button>
                   <button
                     type="button"
@@ -548,7 +564,7 @@ if (isGenerating) {
                     title="Delete plan"
                   >
                     <IconTrash />
-                    {deletingId === plan._id ? "Deleting..." : "Delete"}
+                    <span>{deletingId === plan._id ? "Deleting..." : "Delete"}</span>
                   </button>
                 </div>
               </div>
