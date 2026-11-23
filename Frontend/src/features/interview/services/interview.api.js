@@ -32,7 +32,7 @@ export const generateInterviewReport = async ({ resumeFile, selfDescription, job
     formData.append("selfDescription", selfDescription);
     formData.append("jobDescription", jobDescription);
 
-    const response = await api.post("/api/interview/", formData, {
+    const response = await api.post("/api/interview", formData, {
         headers: {
             "Content-Type": "multipart/form-data"
         }
@@ -61,7 +61,7 @@ export const getInterviewReportById = async (interviewId) => {
  * @description Service function to get all interview reports of the logged in user.
  */
 export const getAllInterviewReports = async () => {
-    const response = await api.get("/api/interview/")
+    const response = await api.get("/api/interview")
     return response.data;
 }
 
