@@ -1,4 +1,4 @@
-// ── Authentication Form Styling (Human-Crafted, 10/10 Production Standard) ──
+// ── Authentication Form Styling (Human-Crafted, Strict Zero-Scroll Standard) ──
 $font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 $bg-primary: #91aaa5;
@@ -16,24 +16,59 @@ $accent-halo: rgba(27, 77, 70, 0.12);
 $border-subtle: rgba(21, 34, 31, 0.08);
 $border-input: #d8e2df;
 
-$shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 25, 0.04);
-$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+$shadow-card: 0 16px 40px -10px rgba(15, 30, 25, 0.14), 0 2px 8px rgba(15, 30, 25, 0.04);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+// ── Strictly Prevent Page Scrollbars on Auth Screens ────────────────────────
+html:has(.auth-page),
+body:has(.auth-page),
+#root:has(.auth-page) {
+  overflow: hidden !important;
+  height: 100% !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+
+  &::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
 
 .auth-page {
-  min-height: 100vh;
-  min-height: 100dvh;
-  width: 100%;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background-color: $bg-primary;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem 1rem;
-  position: relative;
+  padding: 1rem;
   font-family: $font-sans;
   color: $text-primary;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  z-index: 20;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  @media (max-height: 520px) {
+    position: relative;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 // ── Background Texture ──────────────────────────────────────────────────────
@@ -47,16 +82,16 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   z-index: 0;
 }
 
-// ── Back to Home Link (Fixed so it never gets scrolled away) ────────────────
+// ── Back to Home Link (Fixed Top-Left) ──────────────────────────────────────
 .auth-nav-top {
   position: fixed;
-  top: 1.25rem;
-  left: 1.5rem;
-  z-index: 30;
+  top: 1rem;
+  left: 1.25rem;
+  z-index: 40;
 
   @media (max-width: 600px) {
-    top: 0.85rem;
-    left: 1rem;
+    top: 0.75rem;
+    left: 0.75rem;
   }
 }
 
@@ -64,12 +99,12 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.4rem 0.85rem;
+  padding: 0.38rem 0.8rem;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(0, 0, 0, 0.08);
   color: $text-primary;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   text-decoration: none;
   backdrop-filter: blur(10px);
@@ -87,34 +122,33 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 }
 
-// ── Auth Elevated Card ──────────────────────────────────────────────────────
+// ── Compact Auth Card (Fits 100% inside any standard viewport) ──────────────
 .auth-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   background: $bg-card;
   border: 1px solid $border-subtle;
-  border-radius: 1.25rem;
-  padding: 2.25rem 2rem 1.85rem;
+  border-radius: 1.15rem;
+  padding: 1.75rem 1.85rem 1.5rem;
   box-shadow: $shadow-card;
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
-  margin: auto 0;
+  gap: 0.95rem;
 
   @media (max-width: 480px) {
-    padding: 1.85rem 1.35rem 1.5rem;
-    gap: 1rem;
+    padding: 1.5rem 1.25rem 1.25rem;
+    gap: 0.85rem;
   }
 
   &__brand {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.55rem;
+    gap: 0.5rem;
     cursor: pointer;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.05rem;
   }
 
   &__header {
@@ -123,10 +157,10 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 
   &__footer {
     text-align: center;
-    padding-top: 0.25rem;
+    padding-top: 0.1rem;
 
     p {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: $text-secondary;
       margin: 0;
 
@@ -146,9 +180,9 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .auth-brand-glyph {
-  width: 30px;
-  height: 30px;
-  border-radius: 0.5rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 0.45rem;
   background: $accent-primary;
   color: #ffffff;
   display: flex;
@@ -158,7 +192,7 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 .auth-brand-name {
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   letter-spacing: -0.02em;
   color: $text-primary;
 }
@@ -168,19 +202,19 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .auth-title {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.025em;
   color: $text-primary;
-  margin: 0 0 0.3rem;
+  margin: 0 0 0.2rem;
 }
 
 .auth-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: $text-secondary;
-  line-height: 1.45;
+  line-height: 1.4;
   margin: 0 auto;
-  max-width: 320px;
+  max-width: 310px;
 }
 
 // ── Google One-Click Social Button ──────────────────────────────────────────
@@ -189,14 +223,14 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
-  padding: 0.68rem 1rem;
-  border-radius: 0.65rem;
+  gap: 0.6rem;
+  padding: 0.58rem 0.9rem;
+  border-radius: 0.6rem;
   background: #ffffff;
   border: 1px solid $border-input;
   color: $text-primary;
   font-family: $font-sans;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: $shadow-sm;
@@ -219,7 +253,7 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 0.1rem 0;
+  margin: 0;
 
   &::before,
   &::after {
@@ -229,8 +263,8 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
   span {
-    padding: 0 0.75rem;
-    font-size: 0.75rem;
+    padding: 0 0.65rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: $text-muted;
     text-transform: lowercase;
@@ -241,15 +275,15 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 .auth-alert {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.65rem 0.85rem;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
   background: #fef2f2;
   border: 1px solid #fecaca;
-  border-radius: 0.6rem;
+  border-radius: 0.55rem;
   color: #b91c1c;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.35;
 
   svg {
     flex-shrink: 0;
@@ -258,12 +292,12 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .auth-info-banner {
-  padding: 0.6rem 0.85rem;
+  padding: 0.5rem 0.75rem;
   background: #eff6ff;
   border: 1px solid #bfdbfe;
-  border-radius: 0.6rem;
+  border-radius: 0.55rem;
   color: #1e40af;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
   text-align: center;
 }
@@ -272,16 +306,16 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 0.95rem;
+  gap: 0.85rem;
 }
 
 .auth-input-group {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.3rem;
 
   label {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     color: $text-primary;
@@ -304,9 +338,9 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
     background: $bg-input;
     border: 1px solid $border-input;
     outline: none;
-    padding: 0.68rem 2.5rem 0.68rem 2.4rem;
-    border-radius: 0.6rem;
-    font-size: 0.9rem;
+    padding: 0.6rem 2.4rem 0.6rem 2.3rem;
+    border-radius: 0.55rem;
+    font-size: 0.88rem;
     color: $text-primary;
     font-family: $font-sans;
     transition: all 0.18s ease;
@@ -335,7 +369,7 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 .auth-input-left-icon {
   position: absolute;
-  left: 0.85rem;
+  left: 0.8rem;
   color: $text-muted;
   display: flex;
   align-items: center;
@@ -345,16 +379,16 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 .auth-password-toggle {
   position: absolute;
-  right: 0.75rem;
+  right: 0.7rem;
   background: transparent;
   border: none;
-  padding: 0.25rem;
+  padding: 0.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: $text-muted;
   cursor: pointer;
-  border-radius: 0.35rem;
+  border-radius: 0.3rem;
   transition: color 0.15s ease;
 
   &:hover {
@@ -363,7 +397,7 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .auth-field-hint {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: $text-muted;
   font-weight: 500;
 }
@@ -374,17 +408,17 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.5rem;
   background: $accent-primary;
   color: #ffffff;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 600;
   font-family: $font-sans;
-  padding: 0.8rem 1.25rem;
-  border-radius: 0.65rem;
+  padding: 0.72rem 1.15rem;
+  border-radius: 0.6rem;
   border: none;
   cursor: pointer;
-  margin-top: 0.35rem;
+  margin-top: 0.2rem;
   box-shadow: 0 2px 8px rgba(27, 77, 70, 0.22);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -421,10 +455,10 @@ $shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 .auth-trust-row {
   text-align: center;
   border-top: 1px solid $border-subtle;
-  padding-top: 0.95rem;
+  padding-top: 0.75rem;
 
   span {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: $text-muted;
     letter-spacing: 0.02em;

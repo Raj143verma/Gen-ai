@@ -25,7 +25,6 @@ body {
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
 
   // Unified Sage Teal canvas
   background-color: #91aaa5;
@@ -42,7 +41,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  overflow-y: auto;
   background-color: #91aaa5;
 }
 
