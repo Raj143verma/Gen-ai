@@ -113,6 +113,13 @@ const IconArrowLeft = () => (
   </svg>
 )
 
+const IconArrowRight = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+)
+
 const IconFileText = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -2076,7 +2083,7 @@ const CandidateAnalyticsDashboard = ({
     badgeClass: "cad-tier--ready",
     summary: "Your profile alignment, roadmap execution velocity, and practice scores put you in the top 10% candidate bracket for this role. Maintain your edge with final mock interview polish!",
     probability: "86% – 94% Clearance Likelihood",
-    color: "#10b981"
+    color: "#059669"
   };
 
   if (readinessIndex < 48) {
@@ -2086,7 +2093,7 @@ const CandidateAnalyticsDashboard = ({
       badgeClass: "cad-tier--early",
       summary: "You are currently in the initial setup phase. Focus on Day 1–3 core roadmap concepts and complete your first technical coding challenge to boost readiness.",
       probability: "35% – 48% Clearance Likelihood",
-      color: "#f87171"
+      color: "#dc2626"
     };
   } else if (readinessIndex < 70) {
     tier = {
@@ -2095,7 +2102,7 @@ const CandidateAnalyticsDashboard = ({
       badgeClass: "cad-tier--moderate",
       summary: "Steady progress underway! Target your high-severity skill gaps and solve remaining roadmap tasks to push past the 70% threshold.",
       probability: "56% – 70% Clearance Likelihood",
-      color: "#fbbf24"
+      color: "#b45309"
     };
   } else if (readinessIndex < 85) {
     tier = {
@@ -2104,7 +2111,7 @@ const CandidateAnalyticsDashboard = ({
       badgeClass: "cad-tier--strong",
       summary: "Solid capability foundation. Finish remaining roadmap tasks, practice STAR behavioral questions, and verify your code Big-O complexities.",
       probability: "73% – 85% Clearance Likelihood",
-      color: "#60a5fa"
+      color: "#0f766e"
     };
   }
 
@@ -2359,8 +2366,8 @@ const CandidateAnalyticsDashboard = ({
                   className="cad-gap-action-btn"
                   onClick={() => onNavigate("roadmap")}
                 >
-                  <IconShieldCheck />
                   <span>View Mitigation in Roadmap</span>
+                  <IconArrowRight />
                 </button>
               </div>
             );
