@@ -1,9 +1,9 @@
-// ── Authentication Form Styling (Human-Crafted, Production Standard) ────────
+// ── Authentication Form Styling (Human-Crafted, 10/10 Production Standard) ──
 $font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 $bg-primary: #91aaa5;
 $bg-card: #ffffff;
-$bg-input: #fbfdfc;
+$bg-input: #ffffff;
 
 $text-primary: #15221f;
 $text-secondary: #425450;
@@ -14,24 +14,26 @@ $accent-hover: #133934;
 $accent-halo: rgba(27, 77, 70, 0.12);
 
 $border-subtle: rgba(21, 34, 31, 0.08);
-$border-input: #dce5e2;
+$border-input: #d8e2df;
 
 $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 25, 0.04);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 .auth-page {
   min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   background-color: $bg-primary;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1rem;
   position: relative;
   font-family: $font-sans;
   color: $text-primary;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
 }
 
 // ── Background Texture ──────────────────────────────────────────────────────
@@ -45,15 +47,15 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
   z-index: 0;
 }
 
-// ── Back to Home Link ───────────────────────────────────────────────────────
+// ── Back to Home Link (Fixed so it never gets scrolled away) ────────────────
 .auth-nav-top {
-  position: absolute;
-  top: 1.5rem;
-  left: 2rem;
-  z-index: 10;
+  position: fixed;
+  top: 1.25rem;
+  left: 1.5rem;
+  z-index: 30;
 
   @media (max-width: 600px) {
-    top: 1rem;
+    top: 0.85rem;
     left: 1rem;
   }
 }
@@ -61,21 +63,22 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 .auth-back-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 0.85rem;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   color: $text-primary;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-decoration: none;
-  backdrop-filter: blur(8px);
-  transition: all 0.15s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
     background: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     transform: translateX(-2px);
   }
 
@@ -87,29 +90,31 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 // ── Auth Elevated Card ──────────────────────────────────────────────────────
 .auth-card {
   width: 100%;
-  max-width: 440px;
+  max-width: 420px;
   background: $bg-card;
   border: 1px solid $border-subtle;
   border-radius: 1.25rem;
-  padding: 2.75rem 2.25rem 2.25rem;
+  padding: 2.25rem 2rem 1.85rem;
   box-shadow: $shadow-card;
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  gap: 1.15rem;
+  margin: auto 0;
 
   @media (max-width: 480px) {
-    padding: 2rem 1.5rem;
+    padding: 1.85rem 1.35rem 1.5rem;
+    gap: 1rem;
   }
 
   &__brand {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.65rem;
+    gap: 0.55rem;
     cursor: pointer;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.15rem;
   }
 
   &__header {
@@ -118,10 +123,10 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 
   &__footer {
     text-align: center;
-    padding-top: 0.5rem;
+    padding-top: 0.25rem;
 
     p {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       color: $text-secondary;
       margin: 0;
 
@@ -141,9 +146,9 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 }
 
 .auth-brand-glyph {
-  width: 32px;
-  height: 32px;
-  border-radius: 0.55rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 0.5rem;
   background: $accent-primary;
   color: #ffffff;
   display: flex;
@@ -153,7 +158,7 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 
 .auth-brand-name {
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   letter-spacing: -0.02em;
   color: $text-primary;
 }
@@ -163,32 +168,86 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 }
 
 .auth-title {
-  font-size: 1.55rem;
+  font-size: 1.45rem;
   font-weight: 800;
   letter-spacing: -0.025em;
   color: $text-primary;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.3rem;
 }
 
 .auth-subtitle {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: $text-secondary;
-  line-height: 1.5;
+  line-height: 1.45;
   margin: 0 auto;
-  max-width: 340px;
+  max-width: 320px;
 }
 
-// ── Alert Banner ────────────────────────────────────────────────────────────
+// ── Google One-Click Social Button ──────────────────────────────────────────
+.auth-google-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.68rem 1rem;
+  border-radius: 0.65rem;
+  background: #ffffff;
+  border: 1px solid $border-input;
+  color: $text-primary;
+  font-family: $font-sans;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: $shadow-sm;
+  transition: all 0.18s ease;
+
+  &:hover {
+    background: #fbfdfc;
+    border-color: rgba(21, 34, 31, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ── Divider ─────────────────────────────────────────────────────────────────
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0.1rem 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(21, 34, 31, 0.08);
+  }
+
+  span {
+    padding: 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $text-muted;
+    text-transform: lowercase;
+  }
+}
+
+// ── Alert & Info Banners ────────────────────────────────────────────────────
 .auth-alert {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1rem;
+  gap: 0.55rem;
+  padding: 0.65rem 0.85rem;
   background: #fef2f2;
   border: 1px solid #fecaca;
-  border-radius: 0.65rem;
+  border-radius: 0.6rem;
   color: #b91c1c;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 500;
   line-height: 1.4;
 
@@ -198,33 +257,56 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
   }
 }
 
-// ── Form Elements ───────────────────────────────────────────────────────────
+.auth-info-banner {
+  padding: 0.6rem 0.85rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.6rem;
+  color: #1e40af;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+// ── Form Elements & Left Icons ──────────────────────────────────────────────
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 0.95rem;
 }
 
 .auth-input-group {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.35rem;
 
   label {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     color: $text-primary;
   }
+}
+
+.auth-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 
   input {
     width: 100%;
     background: $bg-input;
     border: 1px solid $border-input;
     outline: none;
-    padding: 0.75rem 1rem;
-    border-radius: 0.65rem;
-    font-size: 0.92rem;
+    padding: 0.68rem 2.5rem 0.68rem 2.4rem;
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
     color: $text-primary;
     font-family: $font-sans;
     transition: all 0.18s ease;
@@ -238,22 +320,32 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
       background: #ffffff;
       box-shadow: 0 0 0 3px $accent-halo;
     }
+
+    // ── Chrome/Edge Autofill Background Fix ──
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus, 
+    &:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+      -webkit-text-fill-color: #15221f !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
   }
 }
 
-.auth-input-wrapper {
-  position: relative;
+.auth-input-left-icon {
+  position: absolute;
+  left: 0.85rem;
+  color: $text-muted;
   display: flex;
   align-items: center;
-
-  input {
-    padding-right: 2.75rem;
-  }
+  justify-content: center;
+  pointer-events: none;
 }
 
 .auth-password-toggle {
   position: absolute;
-  right: 0.85rem;
+  right: 0.75rem;
   background: transparent;
   border: none;
   padding: 0.25rem;
@@ -271,9 +363,9 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 }
 
 .auth-field-hint {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: $text-muted;
-  margin-top: -0.15rem;
+  font-weight: 500;
 }
 
 // ── Primary Brand Button ────────────────────────────────────────────────────
@@ -285,21 +377,21 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
   gap: 0.55rem;
   background: $accent-primary;
   color: #ffffff;
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   font-weight: 600;
   font-family: $font-sans;
-  padding: 0.85rem 1.25rem;
+  padding: 0.8rem 1.25rem;
   border-radius: 0.65rem;
   border: none;
   cursor: pointer;
-  margin-top: 0.5rem;
-  box-shadow: 0 2px 8px rgba(27, 77, 70, 0.25);
+  margin-top: 0.35rem;
+  box-shadow: 0 2px 8px rgba(27, 77, 70, 0.22);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover:not(:disabled) {
     background: $accent-hover;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(27, 77, 70, 0.35);
+    box-shadow: 0 4px 14px rgba(27, 77, 70, 0.32);
   }
 
   &:active:not(:disabled) {
@@ -329,10 +421,10 @@ $shadow-card: 0 20px 48px -12px rgba(15, 30, 25, 0.14), 0 2px 10px rgba(15, 30, 
 .auth-trust-row {
   text-align: center;
   border-top: 1px solid $border-subtle;
-  padding-top: 1.15rem;
+  padding-top: 0.95rem;
 
   span {
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: $text-muted;
     letter-spacing: 0.02em;
