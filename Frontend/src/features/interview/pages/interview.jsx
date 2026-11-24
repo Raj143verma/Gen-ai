@@ -1174,7 +1174,7 @@ const RoadmapSection = ({ plan, completedTasks = [], onToggleTask }) => {
     <section className="content-section">
       <div className="content-section__header">
         <span className="content-section__icon"><IconMap /></span>
-        <h2 className="content-section__title">7-Day Road Map</h2>
+        <h2 className="content-section__title">7-Day Preparation Roadmap</h2>
         {totalTasks > 0 && (
           <span className="section-count">{percent}%</span>
         )}
@@ -2536,10 +2536,10 @@ const CandidateAnalyticsDashboard = ({
 
 const NAV_ITEMS = [
   { key: 'analytics',  label: 'Readiness & Analytics', icon: <IconBarChart /> },
-  { key: 'technical',  label: 'Technical questions',  icon: <IconCode /> },
-  { key: 'behavioral', label: 'Behavioral questions', icon: <IconUsers /> },
-  { key: 'roadmap',    label: 'Road Map',             icon: <IconMap /> },
-  { key: 'resume',     label: 'Optimized Resume',     icon: <IconFileText /> },
+  { key: 'technical',  label: 'Technical Questions',   icon: <IconCode /> },
+  { key: 'behavioral', label: 'Behavioral Questions',  icon: <IconUsers /> },
+  { key: 'roadmap',    label: 'Roadmap',               icon: <IconMap /> },
+  { key: 'resume',     label: 'Optimized Resume',      icon: <IconFileText /> },
 ]
 
 const Interview = () => {
