@@ -2262,7 +2262,7 @@ const CandidateAnalyticsDashboard = ({
             <span>Tailored: {optimizedResume ? "Generated" : "Pending"}</span>
           </div>
           <div className="cad-pillar-bar">
-            <div className="cad-pillar-bar__fill" style={{ width: `${matchScore}%`, background: '#3b82f6' }} />
+            <div className="cad-pillar-bar__fill" style={{ width: `${matchScore}%`, background: '#1b4d46' }} />
           </div>
           <span className="cad-pillar-cta">View Tailored Resume →</span>
         </div>
