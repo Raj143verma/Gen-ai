@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../auth-context";
-import { login, register, logout,getMe } from "../services/auth.api";
+import { login, register, logout, getMe, googleAuth } from "../services/auth.api";
 
 
 
@@ -43,6 +43,23 @@ export const useAuth = () => {
         }
     }
 
+    const handleGoogleAuth = async ({ credential, accessToken }) => {
+        setLoading(true);
+        try {
+            const data = await googleAuth({ credential, accessToken });
+            if (data?.token) {
+                localStorage.setItem("token", data.token);
+            }
+            setUser(data.user);
+            return data.user;
+        } catch (err) {
+            console.error("Google authentication failed:", err.response?.data?.message || err.message);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    }
+
     const handleLogout = async () => {
         setLoading(true);
         try{
@@ -79,6 +96,6 @@ export const useAuth = () => {
     }, [user, setUser, setLoading]);
 
 
-    return { user, loading, handleLogin, handleRegister, handleLogout };
+    return { user, loading, handleLogin, handleRegister, handleGoogleAuth, handleLogout };
 
 }

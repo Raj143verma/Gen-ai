@@ -19,6 +19,13 @@ authRouter.post("/register", authController.registerUserController);
 
 authRouter.post("/login", authController.loginUserController);
 
+/**
+ * @route POST /api/auth/google
+ * @desc Authenticate or register a user with Google OAuth (ID token or access token)
+ * @access Public
+ */
+authRouter.post("/google", authController.googleAuthController);
+
 
 /**
  * @route POST /api/auth/logout

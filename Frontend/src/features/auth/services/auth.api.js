@@ -51,6 +51,22 @@ export async function login({ email, password }) {
 }
 
 
+export async function googleAuth({ credential, accessToken }) {
+    try {
+        const response = await api.post("/api/auth/google", {
+            credential,
+            accessToken
+        });
+        if (response.data?.token) {
+            localStorage.setItem("token", response.data.token);
+        }
+        return response.data;
+    } catch (err) {
+        console.error("Google auth API error:", err);
+        throw err;
+    }
+}
+
 export async function logout() {
     try {
         const response = await api.get("/api/auth/logout");

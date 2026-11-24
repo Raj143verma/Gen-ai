@@ -80,7 +80,7 @@ const IconShieldCheck = () => (
 
 export default function Login() {
   const navigate = useNavigate()
-  const { handleLogin } = useAuth()
+  const { handleLogin, handleGoogleAuth } = useAuth()
 
   useEffect(() => {
     const prevBodyOverflow = document.body.style.overflow
@@ -123,7 +123,67 @@ export default function Login() {
   }
 
   const handleGoogleClick = () => {
-    setInfoMsg("Google sign-in is rolling out soon. Please use email & password below.")
+    setError("")
+    setInfoMsg("")
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
+
+    if (!clientId || clientId.trim() === "" || clientId.includes("your-google-client-id")) {
+      setError("Google Client ID is not configured yet. Please set VITE_GOOGLE_CLIENT_ID in your Frontend environment variables.")
+      return
+    }
+
+    if (!window.google?.accounts?.oauth2 && !window.google?.accounts?.id) {
+      setError("Google sign-in service is loading or blocked by an ad-blocker. Please refresh the page.")
+      return
+    }
+
+    try {
+      if (window.google?.accounts?.oauth2) {
+        const tokenClient = window.google.accounts.oauth2.initTokenClient({
+          client_id: clientId,
+          scope: "email profile openid",
+          callback: async (tokenResponse) => {
+            if (tokenResponse?.error) {
+              setError(`Google Sign-In canceled or failed: ${tokenResponse.error}`)
+              return
+            }
+            if (tokenResponse?.access_token) {
+              setIsSubmitting(true)
+              try {
+                await handleGoogleAuth({ accessToken: tokenResponse.access_token })
+                navigate("/home")
+              } catch (err) {
+                setError(err.response?.data?.message || "Google authentication failed. Please try again.")
+              } finally {
+                setIsSubmitting(false)
+              }
+            }
+          }
+        })
+        tokenClient.requestAccessToken({ prompt: "select_account" })
+      } else if (window.google?.accounts?.id) {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: async (response) => {
+            if (response?.credential) {
+              setIsSubmitting(true)
+              try {
+                await handleGoogleAuth({ credential: response.credential })
+                navigate("/home")
+              } catch (err) {
+                setError(err.response?.data?.message || "Google authentication failed. Please try again.")
+              } finally {
+                setIsSubmitting(false)
+              }
+            }
+          }
+        })
+        window.google.accounts.id.prompt()
+      }
+    } catch (err) {
+      console.error("Google popup error:", err)
+      setError("Failed to open Google Sign-In popup.")
+    }
   }
 
   return (
