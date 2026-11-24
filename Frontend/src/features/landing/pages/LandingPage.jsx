@@ -64,6 +64,27 @@ const IconTarget = () => (
   </svg>
 )
 
+const IconMic = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+    <line x1="12" y1="19" x2="12" y2="22" />
+  </svg>
+)
+
+const IconChevronDown = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+)
+
+const IconCopy = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+  </svg>
+)
+
 // ── Realistic, Human-Curated Role Examples ──────────────────────────────────
 const ROLE_PREVIEWS = {
   data_analyst: {
@@ -98,6 +119,13 @@ const ROLE_PREVIEWS = {
         { day: 6, topic: "Mock Case Study Drill" },
         { day: 7, topic: "Final Review & Cheat Sheet" }
       ]
+    },
+    resumeDiff: {
+      section: "Experience · Analytics Intern",
+      originalBullet: "Responsible for writing SQL queries and creating daily dashboard reports for stakeholders.",
+      optimizedBullet: "Architected automated PostgreSQL data pipelines and interactive Tableau dashboards for 50K+ daily records, slashing report latency by 75% and ensuring 100% data integrity.",
+      upgradeReason: "Quantifies business impact with concrete metrics (50K+ records, 75% latency reduction) and embeds target job keywords.",
+      keywordsAdded: ["PostgreSQL", "Data Integrity", "Tableau", "Pipelines", "Real-Time"]
     }
   },
 
@@ -133,6 +161,13 @@ const ROLE_PREVIEWS = {
         { day: 6, topic: "Full-Stack Mock Coding Challenge" },
         { day: 7, topic: "Resume Alignment & Final Polish" }
       ]
+    },
+    resumeDiff: {
+      section: "Experience · Full-Stack Developer",
+      originalBullet: "Built frontend features with React and worked on backend APIs with Node and Express.",
+      optimizedBullet: "Engineered high-performance React 18 interfaces and modular Node.js/Express REST microservices, reducing client bundle size by 35% and sustaining 99.9% uptime during peak traffic.",
+      upgradeReason: "Converts passive duties into active engineering achievements with concrete metrics (-35% bundle, 99.9% uptime) and framework keywords.",
+      keywordsAdded: ["React 18", "Node.js", "REST APIs", "Microservices", "Concurrency"]
     }
   },
 
@@ -168,6 +203,13 @@ const ROLE_PREVIEWS = {
         { day: 6, topic: "Live Coding Sandbox: LeetCode Mediums" },
         { day: 7, topic: "Mock Technical Deep-Dive" }
       ]
+    },
+    resumeDiff: {
+      section: "Experience · Systems Engineer",
+      originalBullet: "Helped maintain the database, updated backend routes, and fixed bugs in user authentication.",
+      optimizedBullet: "Architected distributed Redis caching and composite PostgreSQL indexing across 15 cloud instances, eliminating race conditions and scaling throughput to 50K req/sec.",
+      upgradeReason: "Elevates entry-level maintenance phrasing to production distributed systems terminology with proven throughput scale.",
+      keywordsAdded: ["PostgreSQL", "Redis", "Distributed Caching", "Rate Limiting", "Lua"]
     }
   },
 
@@ -203,9 +245,40 @@ const ROLE_PREVIEWS = {
         { day: 6, topic: "Coding Sandbox: Python Algorithms" },
         { day: 7, topic: "Final Interview Strategy Review" }
       ]
+    },
+    resumeDiff: {
+      section: "Projects · Applied AI Engineer",
+      originalBullet: "Built a chatbot using LangChain and OpenAI to summarize user PDF documents.",
+      optimizedBullet: "Engineered an enterprise RAG pipeline with hybrid vector embeddings, semantic chunking, and strict Zod validation, eliminating hallucinations and achieving 94% answer precision.",
+      upgradeReason: "Transforms generic wrapper project into enterprise-grade GenAI engineering with hallucination mitigations and verified precision metrics.",
+      keywordsAdded: ["RAG", "Vector Embeddings", "Zod Validation", "Prompt Engineering", "Semantic Search"]
     }
   }
 }
+
+// ── Realistic Frequently Asked Questions ────────────────────────────────────
+const FAQS = [
+  {
+    q: "How is Intervue.AI different from generic ChatGPT or Claude prompts?",
+    a: "Generic AI chatbots give hypothetical, one-size-fits-all answers with zero awareness of your real career background. Intervue.AI performs deep bidirectional matching: it cross-examines your authentic resume against the exact target Job Description. It pinpoints your true capability gaps, tailors your resume bullets with verifiable metrics, provides runnable coding/SQL sandboxes with Big-O analysis, supports voice speech-to-text behavioral practice, and organizes your prep into an exportable 7-day roadmap."
+  },
+  {
+    q: "Will my resume and personal career data remain private and secure?",
+    a: "Yes, 100%. Your uploaded resume and inputs are processed strictly to compile your personalized interview strategy and ATS diffs. We never sell your data, use your resume for public model training, or share it with third parties. All your generated plans stay securely in your authenticated workspace."
+  },
+  {
+    q: "Can I download the tailored resume and preparation plan for offline study?",
+    a: "Absolutely. With 1 click, you can export your entire custom interview blueprint—including the 7-day checklist, technical questions with model answers, and ATS-optimized bullet diffs—as a clean, printer-ready PDF."
+  },
+  {
+    q: "What tech stacks and roles does Intervue.AI support?",
+    a: "Intervue.AI supports any technical, analytical, or engineering role: Data Analysts & BI, Full-Stack SDEs, Frontend (React / TypeScript), Backend & Distributed Systems, AI/ML Engineers, Data Engineering, DevOps/Cloud, and QA Automation."
+  },
+  {
+    q: "Is Intervue.AI really 100% free to use?",
+    a: "Yes! You can create your account and generate your custom interview strategy completely free. No credit card is required, and there are no hidden paywalls."
+  }
+]
 
 export default function LandingPage() {
   const navigate = useNavigate()
@@ -213,7 +286,17 @@ export default function LandingPage() {
 
   // Interactive Live Demo Tab States
   const [selectedRoleKey, setSelectedRoleKey] = useState("data_analyst")
-  const [activeTab, setActiveTab] = useState("technical") // 'technical' | 'star' | 'roadmap'
+  const [activeTab, setActiveTab] = useState("technical") // 'technical' | 'star' | 'roadmap' | 'resume'
+  const [openFaqIndex, setOpenFaqIndex] = useState(0)
+  const [copiedBullet, setCopiedBullet] = useState(false)
+
+  const handleCopyBullet = (text) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text)
+      setCopiedBullet(true)
+      setTimeout(() => setCopiedBullet(false), 2000)
+    }
+  }
 
   const currentRole = ROLE_PREVIEWS[selectedRoleKey]
 
@@ -245,9 +328,10 @@ export default function LandingPage() {
 
           <nav className="lp-nav__links">
             <a href="#preview" className="lp-nav__link">Live Blueprint</a>
-            <a href="#how-it-works" className="lp-nav__link">How It Works</a>
             <a href="#features" className="lp-nav__link">Features</a>
-            <a href="#roles" className="lp-nav__link">Supported Roles</a>
+            <a href="#how-it-works" className="lp-nav__link">How It Works</a>
+            <a href="#roles" className="lp-nav__link">Roles</a>
+            <a href="#faq" className="lp-nav__link">FAQ</a>
           </nav>
 
           <div className="lp-nav__actions">
@@ -321,6 +405,30 @@ export default function LandingPage() {
               <IconCheck />
               <span>1-Click PDF Export</span>
             </div>
+          </div>
+        </div>
+
+        {/* ── HIGH-TRUST PROOF METRIC STRIP ────────────────────────────── */}
+        <div className="lp-metrics-strip">
+          <div className="lp-metric-card">
+            <span className="lp-metric-num">30s</span>
+            <span className="lp-metric-label">Blueprint Generation</span>
+            <span className="lp-metric-sub">From raw JD to tailored prep plan</span>
+          </div>
+          <div className="lp-metric-card">
+            <span className="lp-metric-num">85%+</span>
+            <span className="lp-metric-label">ATS Alignment Boost</span>
+            <span className="lp-metric-sub">Keyword coverage & metric quantification</span>
+          </div>
+          <div className="lp-metric-card">
+            <span className="lp-metric-num">3 Sandboxes</span>
+            <span className="lp-metric-label">Runnable Code & SQL</span>
+            <span className="lp-metric-sub">Python 3, JavaScript & SQL execution</span>
+          </div>
+          <div className="lp-metric-card">
+            <span className="lp-metric-num">100% Free</span>
+            <span className="lp-metric-label">Instant Private Access</span>
+            <span className="lp-metric-sub">No credit card or paywalls</span>
           </div>
         </div>
 
@@ -426,6 +534,14 @@ export default function LandingPage() {
                 <IconCalendar />
                 <span>7-Day Preparation Roadmap</span>
               </button>
+              <button
+                type="button"
+                className={`lp-content-nav-btn ${activeTab === "resume" ? "lp-content-nav-btn--active" : ""}`}
+                onClick={() => setActiveTab("resume")}
+              >
+                <IconSparkles />
+                <span>ATS Resume Bullet Diff</span>
+              </button>
             </div>
 
             {/* 5. Cohesive Content Body with Balanced Symmetrical Panels */}
@@ -506,6 +622,66 @@ export default function LandingPage() {
                   </div>
                 </div>
               )}
+
+              {activeTab === "resume" && (
+                <div className="lp-tab-content">
+                  <div className="lp-question-header">
+                    <span className="lp-topic-badge lp-topic-badge--emerald">
+                      {currentRole.resumeDiff.section}
+                    </span>
+                    <h4 className="lp-main-question">Before vs After AI Bullet Optimization</h4>
+                  </div>
+
+                  <div className="lp-symmetrical-grid">
+                    <div className="lp-insight-panel lp-diff-panel--before">
+                      <div className="lp-panel-header lp-diff-header--before">
+                        <span className="lp-diff-tag lp-diff-tag--before">BEFORE (ORIGINAL BULLET)</span>
+                      </div>
+                      <p className="lp-diff-text lp-diff-text--before">
+                        "{currentRole.resumeDiff.originalBullet}"
+                      </p>
+                      <div className="lp-diff-footer-note lp-diff-footer-note--before">
+                        <span>⚠️ Generic description without verified scale or ATS keywords</span>
+                      </div>
+                    </div>
+
+                    <div className="lp-insight-panel lp-diff-panel--after">
+                      <div className="lp-panel-header lp-diff-header--after">
+                        <span className="lp-diff-tag lp-diff-tag--after">AFTER (ATS-OPTIMIZED BULLET)</span>
+                        <button
+                          type="button"
+                          className="lp-diff-copy-btn"
+                          onClick={() => handleCopyBullet(currentRole.resumeDiff.optimizedBullet)}
+                        >
+                          <IconCopy />
+                          <span>{copiedBullet ? "Copied!" : "Copy Bullet"}</span>
+                        </button>
+                      </div>
+                      <p className="lp-diff-text lp-diff-text--after">
+                        "{currentRole.resumeDiff.optimizedBullet}"
+                      </p>
+                      <div className="lp-diff-footer-note lp-diff-footer-note--after">
+                        <IconCheck />
+                        <span>Quantified business impact + target role keywords</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="lp-diff-summary-card">
+                    <div className="lp-diff-summary-header">
+                      <IconSparkles />
+                      <span>WHY THIS GETS SHORTLISTED:</span>
+                    </div>
+                    <p className="lp-diff-summary-desc">{currentRole.resumeDiff.upgradeReason}</p>
+                    <div className="lp-diff-keywords-row">
+                      <span className="lp-diff-kw-label">Target Keywords Injected:</span>
+                      {currentRole.resumeDiff.keywordsAdded.map((kw, i) => (
+                        <span key={i} className="lp-diff-kw-chip">+{kw}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 6. Clean, Harmonious Footer Action */}
@@ -550,21 +726,20 @@ export default function LandingPage() {
         </div>
 
         <div className="lp-bento-grid">
-          {/* Card 1: Resume vs JD Match & Skill Gap Radar */}
+          {/* Card 1: ATS Resume Bullet Tailoring & Keyword Radar */}
           <div className="lp-bento-card lp-bento-card--large">
             <div className="lp-bento-icon">
               <IconTarget />
             </div>
-            <span className="lp-bento-tag">PROFILE ALIGNMENT</span>
-            <h3 className="lp-bento-title">Resume vs. JD Match Score & Skill Gap Radar</h3>
+            <span className="lp-bento-tag">ATS OPTIMIZATION</span>
+            <h3 className="lp-bento-title">ATS Resume Bullet Tailoring & Keyword Radar</h3>
             <p className="lp-bento-desc">
-              Don't get caught off-guard. The AI analyzes your exact resume alongside the job requirements, 
-              giving you a realistic 0-100% alignment score and highlighting high-risk technical gaps you need to review first.
+              Don't let ATS screening algorithms filter you out. Intervue.AI performs bidirectional keyword analysis and generates a Before vs After bullet diff that transforms passive responsibilities into quantified, senior-level achievements.
             </p>
             <div className="lp-bento-spec-list">
+              <div className="lp-spec-item"><IconCheck /><span>Before vs After visual bullet diff with actionable feedback</span></div>
               <div className="lp-spec-item"><IconCheck /><span>High, Medium, and Low severity skill gap classification</span></div>
               <div className="lp-spec-item"><IconCheck /><span>Exact missing keywords and technology mismatches highlighted</span></div>
-              <div className="lp-spec-item"><IconCheck /><span>Actionable study advice for each missing requirement</span></div>
             </div>
           </div>
 
@@ -585,21 +760,20 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Card 3: Role-Specific Behavioral STAR Models */}
+          {/* Card 3: Voice & Audio Mock Rehearsal */}
           <div className="lp-bento-card">
             <div className="lp-bento-icon">
-              <IconFileText />
+              <IconMic />
             </div>
-            <span className="lp-bento-tag">BEHAVIORAL RIGOR</span>
-            <h3 className="lp-bento-title">STAR Behavioral Question Prep</h3>
+            <span className="lp-bento-tag">VOICE & BEHAVIORAL RIGOR</span>
+            <h3 className="lp-bento-title">Voice Mock Rehearsals & STAR Prep</h3>
             <p className="lp-bento-desc">
-              Behavioral rounds reject over 40% of qualified engineers. Get structured 
-              <strong>Situation, Task, Action, Result</strong> frameworks customized to your career history.
+              Behavioral rounds reject over 40% of qualified candidates. Practice answering out loud with audio question speech and real-time speech-to-text recording.
             </p>
             <div className="lp-bento-spec-list">
-              <div className="lp-spec-item"><IconCheck /><span>Minimum 5 high-frequency behavioral scenarios</span></div>
-              <div className="lp-spec-item"><IconCheck /><span>Tailored to your past company scale & leadership</span></div>
-              <div className="lp-spec-item"><IconCheck /><span>Practice verbally with built-in voice speech-to-text</span></div>
+              <div className="lp-spec-item"><IconCheck /><span>Minimum 5 high-frequency behavioral STAR scenarios</span></div>
+              <div className="lp-spec-item"><IconCheck /><span>Listen to interviewer questions spoken aloud with TTS</span></div>
+              <div className="lp-spec-item"><IconCheck /><span>Practice verbally with live speech-to-text transcription</span></div>
             </div>
           </div>
 
@@ -648,13 +822,13 @@ export default function LandingPage() {
 
           <div className="lp-pipeline-step">
             <span className="lp-step-num">02</span>
-            <div className="lp-step-content">
+            <span className="lp-step-content">
               <span className="lp-step-tag">AI SYNTHESIS</span>
               <h4 className="lp-step-title">AI Compiles Your Custom Blueprint</h4>
               <p className="lp-step-desc">
                 Gemini AI compares your background to the role requirements, calculates your match score, detects skill gaps, and prepares tailored interview questions with answers.
               </p>
-            </div>
+            </span>
           </div>
 
           <div className="lp-pipeline-step">
@@ -667,6 +841,49 @@ export default function LandingPage() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── FREQUENTLY ASKED QUESTIONS (ACCORDION) ────────────────────── */}
+      <section className="lp-faq-section" id="faq">
+        <div className="lp-section-intro">
+          <div className="lp-kicker">
+            <IconSparkles />
+            <span>GOT QUESTIONS?</span>
+          </div>
+          <h2 className="lp-section-heading">Frequently Asked Questions.</h2>
+          <p className="lp-section-sub">
+            Everything you need to know before generating your tailored interview strategy.
+          </p>
+        </div>
+
+        <div className="lp-faq-container">
+          {FAQS.map((faq, index) => {
+            const isOpen = openFaqIndex === index
+            return (
+              <div
+                key={index}
+                className={`lp-faq-item ${isOpen ? "lp-faq-item--open" : ""}`}
+              >
+                <button
+                  type="button"
+                  className="lp-faq-question"
+                  onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                  aria-expanded={isOpen}
+                >
+                  <span className="lp-faq-q-text">{faq.q}</span>
+                  <span className="lp-faq-toggle-icon">
+                    <IconChevronDown />
+                  </span>
+                </button>
+                {isOpen && (
+                  <div className="lp-faq-answer">
+                    <p>{faq.a}</p>
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       </section>
 
@@ -716,6 +933,7 @@ export default function LandingPage() {
               <a href="#preview">Live Blueprint Preview</a>
               <a href="#features">Key Features</a>
               <a href="#roles">Supported Roles</a>
+              <a href="#faq">FAQ</a>
             </div>
             <div className="lp-footer__col">
               <span className="lp-footer__col-title">SUPPORTED ROLES</span>
